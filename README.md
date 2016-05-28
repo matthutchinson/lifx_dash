@@ -2,7 +2,7 @@
 
 [![Travis Build Status](https://travis-ci.org/matthutchinson/lifx_dash.svg?branch=master)](https://travis-ci.org/matthutchinson/lifx_dash)
 [![Coveralls Coverage Report](https://coveralls.io/repos/matthutchinson/lifx_dash/badge.svg?branch=master&service=github)](https://coveralls.io/r/matthutchinson/lifx_dash)
-[![CodeClimate Analysis](https://d3s6mut3hikguw.cloudfront.net/github/matthutchinson/lifx_dash/badges/gpa.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash)
+[![Code Climate](https://codeclimate.com/github/matthutchinson/lifx_dash/badges/gpa.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash)
 [![Gem Dependency Status](https://gemnasium.com/matthutchinson/lifx_dash.svg)](https://gemnasium.com/matthutchinson/lifx_dash)
 
 *NOTE*: This gem repo is mostly boilerplate for now, and unfit for use until the first
