@@ -1,7 +1,7 @@
 # LifxDash
 
 [![Travis Build Status](https://travis-ci.org/matthutchinson/lifx_dash.svg?branch=master)](https://travis-ci.org/matthutchinson/lifx_dash)
-[![Coveralls Coverage Report](https://coveralls.io/repos/matthutchinson/lifx_dash/badge.svg?branch=master&service=github)](https://coveralls.io/r/matthutchinson/lifx_dash)
+[![Coverage Status](https://coveralls.io/repos/github/matthutchinson/lifx_dash/badge.svg?branch=master)](https://coveralls.io/github/matthutchinson/lifx_dash?branch=master)
 [![Code Climate](https://codeclimate.com/github/matthutchinson/lifx_dash/badges/gpa.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash)
 [![Gem Dependency Status](https://gemnasium.com/matthutchinson/lifx_dash.svg)](https://gemnasium.com/matthutchinson/lifx_dash)
 
