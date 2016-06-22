@@ -1,6 +1,7 @@
 sudo: false
 language: ruby
 before_install:
+  - sudo apt-get install libpcap-dev -qq
   - gem update --system
   - gem --version
 rvm:
