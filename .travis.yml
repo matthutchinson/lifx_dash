@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 language: ruby
 before_install:
   - sudo apt-get install libpcap-dev -qq
