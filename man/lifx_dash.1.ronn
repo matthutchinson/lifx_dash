@@ -1,0 +1,110 @@
+lifx_dash(1) -- Toggle LIFX lights with an Amazon Dash button
+=============================================================
+
+## SYNOPSIS
+
+`lifx_dash` `monitor` -m DASH_MAC_ADDRESS -t LIFX_API_TOKEN<br>
+`lifx_dash` `snoop`<br>
+`lifx_dash` `config`
+
+## DESCRIPTION
+
+**lifx_dash** is a simple command-line tool to monitor your network for Amazon
+Dash button presses and toggle LIFX lights ON or OFF. The tool comes with two
+main commands, `monitor` and `snoop`.
+
+Use `snoop` to scan your network for Dash button presses to identify your Dash
+button MAC address.
+
+Use `monitor` (with a MAC address and LIFX HTTP API token) to listen for Dash
+button presses and toggle your lights ON or OFF. You can optionally pass a LIFX
+bulb selector (the bulb ID), or choose to daemonize the `monitor` process.
+
+Use the `config` command to set default options for the `monitor` and `snoop`
+commands (saved to ~/.lifx_dash.rc.yml).
+
+## REQUIREMENTS
+
+`lifx_dash` requires at least one LIFX bulb, and any Amazon Dash button. During
+Amazon's Dash button setup process, complete all the steps except the last one,
+do NOT select any particular product to be ordered. You will also need a Wifi
+network and sudo (root) access to allow your network adaptor to sniff for
+packets.
+
+You can get a free LIFX API token from here:
+[https://cloud.lifx.com/settings](https://cloud.lifx.com/settings)
+
+## OPTIONS
+
+The snoop command has one optional flag, the network interface to listen on.
+
+* `-i`, `--iface=arg`: Network Interface (default: en0)
+
+The `monitor` command accepts the following flags, both a mac address and api
+token are required.
+
+* `-m`, `--mac_address=arg`: Dash button MAC Address (default: none)
+* `-t`, `--token=arg`: LIFX HTTP API Token (default: none)
+* `-s`, `--selector=arg`:  LIFX Bulb Selector (default: all)
+* `-i`, `--iface=arg`: Network Interface (default: en0)
+* `-d`, `--[no-]daemonize`: Dameonize the monitor process
+
+## EXAMPLES
+
+Get help on command options and arguments
+
+    $ lifx_dash -h
+    $ lifx_dash monitor -h
+    $ lifx_dash snoop --help
+
+Snoop for Dash button presses on en1
+
+    $ lifx_dash snoop en1
+
+Monitor Dash button presses on en0 with DASH_MAC_ADDRESS and LIFX_API_TOKEN,
+when pressed, toggle all lights
+
+    $ lifx_dash monitor -t LIFX_API_TOKEN -m DASH_MAC_ADDRESS
+
+Monitor Dash button presses on en1 with a DASH_MAC_ADDRESS and LIFX_API_TOKEN,
+when pressed toggle the light with id 'd3b2f2d97459'
+
+    $ lifx_dash monitor --token=API_TOKEN --mac=MAC_ADDRESS -s 'd3b2f2d97459' en1
+
+Show the current configuration file options used by the commands
+
+    $ lifx_dash config -s
+
+## FILES
+
+Use the config command to set values for the command options, these will be
+saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be overridden
+with any arguments passed on the command line.
+
+When running as a daemon, the `lifx_dash monitor` command will log output to
+`~/tmp/lifx_dash.log`
+
+## BUGS
+
+No known bugs. Please report any issues here:
+[https://github.com/matthutchinson/lifx_dash/issues](https://github.com/matthutchinson/lifx_dash/issues)
+
+## LICENSE
+
+The MIT License (see link below).
+
+## COPYRIGHT
+
+Copyright (c) 2016 Matthew Hutchinson
+
+## AUTHOR
+
+Matthew Hutchinson, [https://matthewhutchinson.net](https://matthewhutchinson.net)
+
+## SEE ALSO
+
+* [https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt](https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt)
+* [https://rubygems.org/gems/lifx_dash](https://rubygems.org/gems/lifx_dash)
+* [https://github.com/matthutchinson/lifx_dash](https://github.com/matthutchinson/lifx_dash)
+* [https://cloud.lifx.com/settings](https://cloud.lifx.com/settings)
+* [http://tinyurl.com/zujfkjs](http://tinyurl.com/zujfkjs)

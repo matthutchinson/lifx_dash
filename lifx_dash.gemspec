@@ -9,15 +9,17 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Matthew Hutchinson"]
   spec.email         = ["matt@hiddenloop.com"]
 
-  spec.summary       = %q{Control LIFX lights with an Amazon Dash Button}
+  spec.summary       = "Toggle LIFX lights with an Amazon Dash button"
   spec.homepage      = "http://github.com/matthutchinson/lifx_dash"
   spec.license       = "MIT"
 
-  spec.description   = %q{A long running Ruby daemon process that will listen
-  for an Amazon dash button press and toggle LIFX lights ON or OFF via the LIFX
-  HTTP API. With options to configure, dash MAC address, network iface to listen
-  on and LIFX selector name. Inspired by Ted Benson's hack
-  (http://tinyurl.com/zba3da2)}
+  spec.description   = <<-EOF
+  A command line tool to listen for Amazon Dash button presses and toggle LIFX
+  lights ON or OFF (via the LIFX HTTP Cloud API). With options to configure: the
+  Dash MAC address, network interface and LIFX bulb selector. Inspired by Ted
+  Benson's hack (http://tinyurl.com/zba3da2). Root (sudo) access is required for
+  network packet sniffing.
+  EOF
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the
   # 'allowed_push_host' to allow pushing to a single host or delete this section
@@ -29,15 +31,31 @@ Gem::Specification.new do |spec|
   end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.bindir        = "bin"
+  spec.executables   = "lifx_dash"
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "packetfu", "1.1.11"
+  # documentation
+  spec.has_rdoc      = true
+  spec.extra_rdoc_files = ['README.md']
+  spec.rdoc_options << '--title' << 'lifx_dash' << '--main' << 'README.md' << '-ri'
 
+  # non-gem dependecies
+  spec.required_ruby_version = ">= 1.9.1"
+  spec.requirements << 'an Amazon Dash button'
+  spec.requirements << 'one or more LIFX bulbs'
+  spec.requirements << 'root (sudo) access'
+
+  spec.add_runtime_dependency "gli", "2.14.0"
+  spec.add_runtime_dependency "packetfu", "1.1.11"
+
+  # development gems
   spec.add_development_dependency "bundler", "~> 1.12"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.0"
+  spec.add_development_dependency "rdoc"
+  spec.add_development_dependency "aruba"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "ronn"
 end

@@ -1,0 +1,88 @@
+#!/usr/bin/env ruby
+
+require 'gli'
+require 'lifx_dash'
+
+include GLI::App
+
+config_options = LifxDash::Configuration.load
+
+program_desc 'Toggle LIFX lights with an Amazon Dash button'
+
+version LifxDash::VERSION
+
+subcommand_option_handling :normal
+arguments :strict
+
+desc 'Set (and persist) default options for lifx_dash commands'
+long_desc 'Use config to set default values for the command options, these will
+be saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be
+overridden with any arguments passed on the command line.'
+command :config do |c|
+  c.desc 'Show the config file'
+  c.switch [:s, :show]
+
+  c.action do |global_options, options, args|
+    LifxDash::Configuration.new.run(show_config: options[:show])
+  end
+end
+
+
+desc 'Listen for Dash button presses on the network and show packet information'
+long_desc 'Monitor the sepcified network interface for any Dash button ARP
+packets and log the device MAC address to stdout. On pressing a Dash button the
+monitor may pick up ARP packets from other devices on the network. Identify the
+Dash button MAC address from the packet that occurs only once.'
+command :snoop do |c|
+  c.desc 'Network Interface'
+  c.default_value config_options[:iface] || 'en0'
+  c.flag [:i, :iface]
+
+  c.action do |global_options, options, args|
+    LifxDash::Snoop.new(options[:iface]).run
+  end
+end
+
+desc 'Listen for a Dash button press, and the toggle selected lights'
+long_desc 'Monitor the sepcified network interface, filtered by a Dash button
+MAC address.  If a valid ARP packet is detected, the LIFX lights (identified by
+the selector) will be toggled using the LIFX HTTP API (v1). You can optionally
+pass a LIFX bulb selector (the bulb ID), or choose to daemonize the `monitor`
+process.
+
+You can get a free LIFX API token from here: https://cloud.lifx.com/settings
+
+When running as a daemon, this command will log to: ~/tmp/lifx_dash.log'
+command :monitor do |c|
+
+  c.desc 'Dash button MAC Address'
+  c.default_value config_options[:mac_address]
+  c.flag [:m, :mac_address]
+
+  c.desc 'LIFX HTTP API Token'
+  c.default_value config_options[:token]
+  c.flag [:t, :token]
+
+  c.desc 'LIFX Bulb Selector'
+  c.default_value config_options[:selector] || 'all'
+  c.flag [:s, :selector]
+
+  c.desc 'Network Interface'
+  c.default_value config_options[:iface] || 'en0'
+  c.flag [:i, :iface]
+
+  c.desc 'Dameonize the monitor process'
+  c.default_value config_options[:daemonize].to_s == 'true'
+  c.switch [:d, :daemonize]
+
+  c.action do |global_options, options, args|
+    LifxDash::Monitor.new(
+      iface: options[:iface],
+      token: options[:token],
+      mac_address: options[:mac_address],
+      selector: options[:selector]
+    ).run
+  end
+end
+
+exit run(ARGV)

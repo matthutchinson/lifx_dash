@@ -18,3 +18,10 @@ namespace :test do
   end
 end
 
+# generate docs
+require 'rdoc/task'
+Rake::RDocTask.new do |rd|
+  rd.main = "README.md"
+  rd.rdoc_files.include("README.md","lib/**/*.rb","bin/**/*")
+  rd.title = 'lifx_dash'
+end
