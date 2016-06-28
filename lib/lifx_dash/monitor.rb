@@ -3,7 +3,7 @@ module LifxDash
 
     attr_reader :token, :mac, :selector, :iface
 
-    def initialize(token: , mac: , selector: "all", iface: "en0")
+    def initialize(token: nil, mac: nil, selector: "all", iface: "en0")
       @iface    = iface
       @token    = token
       @mac      = mac
