@@ -124,11 +124,12 @@ packets.</p>
 token are required.</p>
 
 <ul>
-<li><code>-m</code>, <code>--mac_address=arg</code>: Dash button MAC Address (default: none)</li>
-<li><code>-t</code>, <code>--token=arg</code>: LIFX HTTP API Token (default: none)</li>
+<li><code>-m</code>, <code>--mac-address=arg</code>: Dash button MAC Address (required)</li>
+<li><code>-t</code>, <code>--token=arg</code>: LIFX HTTP API Token (required)</li>
 <li><code>-s</code>, <code>--selector=arg</code>:  LIFX Bulb Selector (default: all)</li>
 <li><code>-i</code>, <code>--iface=arg</code>: Network Interface (default: en0)</li>
-<li><code>-d</code>, <code>--[no-]daemonize</code>: Dameonize the monitor process</li>
+<li><code>-d</code>, <code>--[no-]daemonize</code>: Dameonize the monitor process (default: no)</li>
+<li><code>-l</code>, <code>--log-file</code>: Log file location (when running as a daemon) (default: /tmp/lifx_dash.log)</li>
 </ul>
 
 
@@ -155,31 +156,32 @@ when pressed, toggle all lights</p>
 <p>Monitor Dash button presses on en1 with a DASH_MAC_ADDRESS and LIFX_API_TOKEN,
 when pressed toggle the light with id 'd3b2f2d97459'</p>
 
-<pre><code>$ lifx_dash monitor --token=API_TOKEN --mac=MAC_ADDRESS -s 'd3b2f2d97459' en1
+<pre><code>$ lifx_dash monitor --token=LIFX_API_TOKEN --mac=DASH_MAC_ADDRESS -s 'd3b2f2d97459' en1
 </code></pre>
 
-<p>Show the current configuration file options used by the commands</p>
+<p>Show the current configuration file options</p>
 
 <pre><code>$ lifx_dash config -s
 </code></pre>
 
 <h2 id="FILES">FILES</h2>
 
-<p>Use the config command to set values for the command options, these will be
+<p>Use the <code>config</code> command to set values for the command options. These will be
 saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be overridden
-with any arguments passed on the command line.</p>
+by any arguments passed on the command line.</p>
 
-<p>When running as a daemon, the <code>lifx_dash monitor</code> command will log output to
-<code>/tmp/lifx_dash.log</code></p>
+<p>If running as a daemon (-d switch), the <code>lifx_dash monitor</code> command will log to
+<code>/tmp/lifx_dash.log</code> by default. Use the --log-file flag to override this.</p>
 
 <h2 id="BUGS">BUGS</h2>
 
-<p>No known bugs. Please report any issues here:
+<p>No known bugs. Please report issues here:
 <a href="https://github.com/matthutchinson/lifx_dash/issues" data-bare-link="true">https://github.com/matthutchinson/lifx_dash/issues</a></p>
 
 <h2 id="LICENSE">LICENSE</h2>
 
-<p>The MIT License (see link below).</p>
+<p>The MIT License:
+<a href="https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt" data-bare-link="true">https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt</a></p>
 
 <h2 id="COPYRIGHT">COPYRIGHT</h2>
 
@@ -192,7 +194,6 @@ with any arguments passed on the command line.</p>
 <h2 id="SEE-ALSO">SEE ALSO</h2>
 
 <ul>
-<li><a href="https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt" data-bare-link="true">https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt</a></li>
 <li><a href="https://rubygems.org/gems/lifx_dash" data-bare-link="true">https://rubygems.org/gems/lifx_dash</a></li>
 <li><a href="https://github.com/matthutchinson/lifx_dash" data-bare-link="true">https://github.com/matthutchinson/lifx_dash</a></li>
 <li><a href="https://cloud.lifx.com/settings" data-bare-link="true">https://cloud.lifx.com/settings</a></li>

@@ -1,21 +1,21 @@
 module LifxDash
   class Monitor
 
-    attr_reader :token, :mac_address, :selector, :iface
+    attr_reader :token, :mac, :selector, :iface
 
-    def initialize(token: , mac_address: , selector: "all", iface: "en0")
-      @iface       = iface
-      @token       = token
-      @mac_address = mac_address
-      @selector    = selector
+    def initialize(token: , mac: , selector: "all", iface: "en0")
+      @iface    = iface
+      @token    = token
+      @mac      = mac
+      @selector = selector
     end
 
     def run
       puts "Starting lifx_dash monitor ..."
-      puts " * listening on #{iface} for Dash button #{mac_address} presses to toggle #{selector} bulb(s)"
+      puts " * listening on #{iface} for Dash button #{mac} presses to toggle #{selector} bulb(s)"
 
-      LifxDash::Capturer.new(iface).listen do |pkt, mac|
-        lifx_api.toggle(selector) if mac == mac_address
+      LifxDash::Capturer.new(iface).listen do |pkt, source_mac_addr|
+        lifx_api.toggle(selector) if source_mac_addr == mac
       end
     end
 

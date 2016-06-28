@@ -43,11 +43,12 @@ The snoop command has one optional flag, the network interface to listen on.
 The `monitor` command accepts the following flags, both a mac address and api
 token are required.
 
-* `-m`, `--mac_address=arg`: Dash button MAC Address (default: none)
-* `-t`, `--token=arg`: LIFX HTTP API Token (default: none)
+* `-m`, `--mac-address=arg`: Dash button MAC Address (required)
+* `-t`, `--token=arg`: LIFX HTTP API Token (required)
 * `-s`, `--selector=arg`:  LIFX Bulb Selector (default: all)
 * `-i`, `--iface=arg`: Network Interface (default: en0)
-* `-d`, `--[no-]daemonize`: Dameonize the monitor process
+* `-d`, `--[no-]daemonize`: Dameonize the monitor process (default: no)
+* `-l`, `--log-file`: Log file location (when running as a daemon) (default: /tmp/lifx_dash.log)
 
 ## EXAMPLES
 
@@ -69,29 +70,30 @@ when pressed, toggle all lights
 Monitor Dash button presses on en1 with a DASH_MAC_ADDRESS and LIFX_API_TOKEN,
 when pressed toggle the light with id 'd3b2f2d97459'
 
-    $ lifx_dash monitor --token=API_TOKEN --mac=MAC_ADDRESS -s 'd3b2f2d97459' en1
+    $ lifx_dash monitor --token=LIFX_API_TOKEN --mac=DASH_MAC_ADDRESS -s 'd3b2f2d97459' en1
 
-Show the current configuration file options used by the commands
+Show the current configuration file options
 
     $ lifx_dash config -s
 
 ## FILES
 
-Use the config command to set values for the command options, these will be
+Use the `config` command to set values for the command options. These will be
 saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be overridden
-with any arguments passed on the command line.
+by any arguments passed on the command line.
 
-When running as a daemon, the `lifx_dash monitor` command will log output to
-`/tmp/lifx_dash.log`
+If running as a daemon (-d switch), the `lifx_dash monitor` command will log to
+`/tmp/lifx_dash.log` by default. Use the --log-file flag to override this.
 
 ## BUGS
 
-No known bugs. Please report any issues here:
+No known bugs. Please report issues here:
 [https://github.com/matthutchinson/lifx_dash/issues](https://github.com/matthutchinson/lifx_dash/issues)
 
 ## LICENSE
 
-The MIT License (see link below).
+The MIT License:
+[https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt](https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt)
 
 ## COPYRIGHT
 
@@ -103,7 +105,6 @@ Matthew Hutchinson, [https://matthewhutchinson.net](https://matthewhutchinson.ne
 
 ## SEE ALSO
 
-* [https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt](https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/LICENSE.txt)
 * [https://rubygems.org/gems/lifx_dash](https://rubygems.org/gems/lifx_dash)
 * [https://github.com/matthutchinson/lifx_dash](https://github.com/matthutchinson/lifx_dash)
 * [https://cloud.lifx.com/settings](https://cloud.lifx.com/settings)

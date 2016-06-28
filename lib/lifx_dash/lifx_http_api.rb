@@ -22,10 +22,10 @@ module LifxDash
         res = http.request(req)
         if success?(res.body)
           LOGGER.info "Lights toggled successfully!"
-          LOGGER.info " * API reply (#{res.code}): #{res.body}"
+          LOGGER.info "API reply (#{res.code}): #{res.body}"
         else
           LOGGER.warn "Warning: Possible issue with LIFX lights or HTTP API response"
-          LOGGER.warn " * API reply (#{res.code}): #{res.body}"
+          LOGGER.warn "API reply (#{res.code}): #{res.body}"
         end
       end
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, URI::InvalidURIError,

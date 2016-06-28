@@ -45,10 +45,10 @@ The snoop command has one optional flag, the network interface to listen on\.
 The \fBmonitor\fR command accepts the following flags, both a mac address and api token are required\.
 .
 .IP "\(bu" 4
-\fB\-m\fR, \fB\-\-mac_address=arg\fR: Dash button MAC Address (default: none)
+\fB\-m\fR, \fB\-\-mac\-address=arg\fR: Dash button MAC Address (required)
 .
 .IP "\(bu" 4
-\fB\-t\fR, \fB\-\-token=arg\fR: LIFX HTTP API Token (default: none)
+\fB\-t\fR, \fB\-\-token=arg\fR: LIFX HTTP API Token (required)
 .
 .IP "\(bu" 4
 \fB\-s\fR, \fB\-\-selector=arg\fR: LIFX Bulb Selector (default: all)
@@ -57,7 +57,10 @@ The \fBmonitor\fR command accepts the following flags, both a mac address and ap
 \fB\-i\fR, \fB\-\-iface=arg\fR: Network Interface (default: en0)
 .
 .IP "\(bu" 4
-\fB\-d\fR, \fB\-\-[no\-]daemonize\fR: Dameonize the monitor process
+\fB\-d\fR, \fB\-\-[no\-]daemonize\fR: Dameonize the monitor process (default: no)
+.
+.IP "\(bu" 4
+\fB\-l\fR, \fB\-\-log\-file\fR: Log file location (when running as a daemon) (default: /tmp/lifx_dash\.log)
 .
 .IP "" 0
 .
@@ -109,14 +112,14 @@ Monitor Dash button presses on en1 with a DASH_MAC_ADDRESS and LIFX_API_TOKEN, w
 .
 .nf
 
-$ lifx_dash monitor \-\-token=API_TOKEN \-\-mac=MAC_ADDRESS \-s \'d3b2f2d97459\' en1
+$ lifx_dash monitor \-\-token=LIFX_API_TOKEN \-\-mac=DASH_MAC_ADDRESS \-s \'d3b2f2d97459\' en1
 .
 .fi
 .
 .IP "" 0
 .
 .P
-Show the current configuration file options used by the commands
+Show the current configuration file options
 .
 .IP "" 4
 .
@@ -129,16 +132,16 @@ $ lifx_dash config \-s
 .IP "" 0
 .
 .SH "FILES"
-Use the config command to set values for the command options, these will be saved to: ~/\.lifx_dash\.rc\.yml and used as defaults\. They can still be overridden with any arguments passed on the command line\.
+Use the \fBconfig\fR command to set values for the command options\. These will be saved to: ~/\.lifx_dash\.rc\.yml and used as defaults\. They can still be overridden by any arguments passed on the command line\.
 .
 .P
-When running as a daemon, the \fBlifx_dash monitor\fR command will log output to \fB/tmp/lifx_dash\.log\fR
+If running as a daemon (\-d switch), the \fBlifx_dash monitor\fR command will log to \fB/tmp/lifx_dash\.log\fR by default\. Use the \-\-log\-file flag to override this\.
 .
 .SH "BUGS"
-No known bugs\. Please report any issues here: \fIhttps://github\.com/matthutchinson/lifx_dash/issues\fR
+No known bugs\. Please report issues here: \fIhttps://github\.com/matthutchinson/lifx_dash/issues\fR
 .
 .SH "LICENSE"
-The MIT License (see link below)\.
+The MIT License: \fIhttps://raw\.githubusercontent\.com/matthutchinson/lifx_dash/master/LICENSE\.txt\fR
 .
 .SH "COPYRIGHT"
 Copyright (c) 2016 Matthew Hutchinson
@@ -147,9 +150,6 @@ Copyright (c) 2016 Matthew Hutchinson
 Matthew Hutchinson, \fIhttps://matthewhutchinson\.net\fR
 .
 .SH "SEE ALSO"
-.
-.IP "\(bu" 4
-\fIhttps://raw\.githubusercontent\.com/matthutchinson/lifx_dash/master/LICENSE\.txt\fR
 .
 .IP "\(bu" 4
 \fIhttps://rubygems\.org/gems/lifx_dash\fR

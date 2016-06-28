@@ -1,53 +1,53 @@
 #!/usr/bin/env ruby
 
-require 'gli'
-require 'logger'
-require 'lifx_dash'
+require "gli"
+require "logger"
+require "lifx_dash"
 
 include GLI::App
 
 LOGGER = Logger.new(STDOUT)
 config_options = LifxDash::Configuration.load
 
-program_desc 'Toggle LIFX lights with an Amazon Dash button'
+program_desc "Toggle LIFX lights with an Amazon Dash button"
 
 version LifxDash::VERSION
 
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Set (and persist) default options for commands'
-long_desc 'Use config to set default values for the command options, these will
+desc "Set (and persist) default options for commands"
+long_desc "Use config to set default values for the command options, these will
 be saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be
-overridden with any arguments passed on the command line.'
+overridden with any arguments passed on the command line."
 skips_pre
 command :config do |c|
-  c.desc 'Show the config file'
+  c.desc "Show the config file"
   c.switch [:s, :show]
 
   c.action do |global_options, options, args|
-    LifxDash::Configuration.new.run(show_config: options[:show])
+    LifxDash::Configuration.new.run(show_config: options["show"])
   end
 end
 
 
-desc 'Listen for Dash button presses on the network and show packet information'
-long_desc 'Monitor the sepcified network interface for any Dash button ARP
+desc "Listen for Dash button presses on the network and show packet information"
+long_desc "Monitor the sepcified network interface for any Dash button ARP
 packets and log the device MAC address to stdout. On pressing a Dash button the
 monitor may pick up ARP packets from other devices on the network. Identify the
-Dash button MAC address from the packet that occurs only once.'
+Dash button MAC address from the packet that occurs only once."
 command :snoop do |c|
-  c.desc 'Network Interface'
-  c.default_value config_options[:iface] || 'en0'
+  c.desc "Network Interface"
+  c.default_value config_options["iface"] || "en0"
   c.flag [:i, :iface]
 
   c.action do |global_options, options, args|
-    LifxDash::Snoop.new(options[:iface]).run
+    LifxDash::Snoop.new(options["iface"]).run
   end
 end
 
-desc 'Listen for a Dash button press, and the toggle selected lights'
-long_desc 'Monitor the sepcified network interface, filtered by a Dash button
+desc "Listen for a Dash button press, and the toggle selected lights"
+long_desc "Monitor the sepcified network interface, filtered by a Dash button
 MAC address.  If a valid ARP packet is detected, the LIFX lights (identified by
 the selector) will be toggled using the LIFX HTTP API (v1). You can optionally
 pass a LIFX bulb selector (the bulb ID), or choose to daemonize the `monitor`
@@ -55,41 +55,47 @@ process.
 
 You can get a free LIFX API token from here: https://cloud.lifx.com/settings
 
-When running as a daemon, this command will log to: /tmp/lifx_dash.log'
+If running as a daemon (-d switch), this command will log to:
+#{LifxDash::Daemonizer::LOG_FILE} by default. Use the --log-file flag to
+overrride this."
 command :monitor do |c|
 
-  c.desc 'Dash button MAC Address'
-  c.default_value config_options[:mac_address]
-  c.flag [:m, :mac_address]
+  c.desc "Dash button MAC address"
+  c.default_value config_options["mac-address"]
+  c.flag [:m, :"mac-address"]
 
-  c.desc 'LIFX HTTP API Token'
-  c.default_value config_options[:token]
+  c.desc "LIFX HTTP API Token"
+  c.default_value config_options["token"]
   c.flag [:t, :token]
 
-  c.desc 'LIFX Bulb Selector'
-  c.default_value config_options[:selector] || 'all'
+  c.desc "LIFX Bulb Selector"
+  c.default_value config_options["selector"] || "all"
   c.flag [:s, :selector]
 
-  c.desc 'Network Interface'
-  c.default_value config_options[:iface] || 'en0'
+  c.desc "Network Interface"
+  c.default_value config_options["iface"] || "en0"
   c.flag [:i, :iface]
 
-  c.desc 'Dameonize the monitor process'
+  c.desc "Log file location (when running as a daemon)"
+  c.default_value config_options["log-file"] || LifxDash::Daemonizer::LOG_FILE
+  c.flag [:l, :"log-file"]
+
+  c.desc "Dameonize the monitor process"
   c.switch [:d, :daemonize]
 
   c.action do |global_options, options, args|
-    help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop #{options[:iface]}` to find it") unless options[:mac_address]
-    help_now!("a valid LIFX API Token option (-t) is required: get one from https://cloud.lifx.com/settings") unless options[:token]
+    help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop #{options["iface"]}` to find it") unless options["mac-address"]
+    help_now!("a valid LIFX API Token option (-t) is required: get one from https://cloud.lifx.com/settings") unless options["token"]
 
-    if options[:daemonize]
-      LifxDash::Daemonizer.start
+    if options["daemonize"]
+      LifxDash::Daemonizer.start(options["log-file"])
     end
 
     LifxDash::Monitor.new(
-      iface: options[:iface],
-      token: options[:token],
-      mac_address: options[:mac_address],
-      selector: options[:selector]
+      iface: options["iface"],
+      token: options["token"],
+      mac: options["mac-address"],
+      selector: options["selector"]
     ).run
   end
 end
@@ -99,7 +105,7 @@ pre do |global_options, command, options, args|
   if Process.euid.zero?
     true
   else
-    help_now!("sudo required: you must be a root user to capture packets on #{options[:iface]}")
+    help_now!("sudo required: you must be a root user to capture packets on #{options["iface"]}")
   end
 end
 

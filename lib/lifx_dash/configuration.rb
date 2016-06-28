@@ -5,10 +5,11 @@ module LifxDash
 
     CONFIG_FILE    = File.join(ENV["HOME"], ".lifx_dash.rc.yml")
     OPTION_PROMPTS = {
-        iface: "Network interface identifier e.g. en0 (choose from ifconfig -l)",
-        token: "LIFX API token (get a free personal token at cloud.lifx.com)",
-        mac_address: "Dash button MAC address (use lifx_dash snoop to find it)",
-        selector: "LIFX bulb selector e.g. all or a LIFX bulb ID"
+      "iface"       => "Network interface identifier e.g. en0 (choose from ifconfig -l)",
+      "token"       => "LIFX API token (get a free personal token at cloud.lifx.com)",
+      "mac-address" => "Dash button MAC address (use lifx_dash snoop to find it)",
+      "selector"    => "LIFX bulb selector e.g. all or a LIFX bulb ID",
+      "log-file"    => "Log file location (when running as a daemon)"
     }
 
     def self.load
