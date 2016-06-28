@@ -27,8 +27,10 @@ end
 
 # generate docs
 require 'rdoc/task'
-Rake::RDocTask.new do |rd|
-  rd.main = "README.md"
-  rd.rdoc_files.include("README.md","lib/**/*.rb","bin/**/*")
-  rd.title = 'lifx_dash'
+RDoc::Task.new do |rd|
+  rd.main     = "README.md"
+  rd.title    = 'lifx_dash'
+  rd.rdoc_dir = 'doc'
+  rd.options  << "--all"
+  rd.rdoc_files.include("README.md", "LICENSE.txt", "lib/**/*.rb", "bin/**/*")
 end
