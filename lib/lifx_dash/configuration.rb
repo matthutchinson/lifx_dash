@@ -1,15 +1,14 @@
-require 'yaml'
+require "yaml"
 
 module LifxDash
   class Configuration
 
-    CONFIG_FILE    = File.join(ENV['HOME'], '.lifx_dash.rc.yml')
+    CONFIG_FILE    = File.join(ENV["HOME"], ".lifx_dash.rc.yml")
     OPTION_PROMPTS = {
-        iface: 'Network interface identifier e.g. en0 (choose from ifconfig -l)',
-        token: 'LIFX API token (get a free personal token at cloud.lifx.com)',
-        mac_address: 'Dash button MAC address (use lifx_dash snoop to find it)',
-        selector: 'LIFX bulb selector e.g. all or a LIFX bulb ID',
-        daemonize: 'Daemonize the monitor process? (y/n)'
+        iface: "Network interface identifier e.g. en0 (choose from ifconfig -l)",
+        token: "LIFX API token (get a free personal token at cloud.lifx.com)",
+        mac_address: "Dash button MAC address (use lifx_dash snoop to find it)",
+        selector: "LIFX bulb selector e.g. all or a LIFX bulb ID"
     }
 
     def self.load
@@ -42,7 +41,7 @@ module LifxDash
       if user_options.values.all?(&:nil?)
         puts "\nNo options set, configuration is unchanged"
       else
-        File.open(CONFIG_FILE, 'w') do |file|
+        File.open(CONFIG_FILE, "w") do |file|
           YAML::dump(user_options, file)
         end
         puts "\nConfiguration saved to #{CONFIG_FILE}"

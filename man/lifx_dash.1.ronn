@@ -82,7 +82,7 @@ saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be overridden
 with any arguments passed on the command line.
 
 When running as a daemon, the `lifx_dash monitor` command will log output to
-`~/tmp/lifx_dash.log`
+`/tmp/lifx_dash.log`
 
 ## BUGS
 

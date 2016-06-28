@@ -3,7 +3,7 @@ module LifxDash
 
     attr_reader :token, :mac_address, :selector, :iface
 
-    def initialize(token: , mac_address: , selector: 'all', iface: 'en0')
+    def initialize(token: , mac_address: , selector: "all", iface: "en0")
       @iface       = iface
       @token       = token
       @mac_address = mac_address
@@ -11,17 +11,18 @@ module LifxDash
     end
 
     def run
-      help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop #{iface}` to find it") unless mac_address
-      help_now!('a valid LIFX API Token option (-t) is required: get one from https://cloud.lifx.com/settings') unless token
+      puts "Starting lifx_dash monitor ..."
+      puts " * listening on #{iface} for Dash button #{mac_address} presses to toggle #{selector} bulb(s)"
 
-      puts "Running monitor"
+      LifxDash::Capturer.new(iface).listen do |pkt, mac|
+        lifx_api.toggle(selector) if mac == mac_address
+      end
+    end
 
-      puts "token: #{token}"
-      puts "mac_address: #{mac_address}"
-      puts "selector: #{selector}"
-      puts "iface: #{iface}"
+    private
 
-      puts "monitor command ran"
+    def lifx_api
+      @lifx_api ||= LifxDash::LifxHTTPApi.new(token)
     end
   end
 end

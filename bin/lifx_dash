@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 
 require 'gli'
+require 'logger'
 require 'lifx_dash'
 
 include GLI::App
 
+LOGGER = Logger.new(STDOUT)
 config_options = LifxDash::Configuration.load
 
 program_desc 'Toggle LIFX lights with an Amazon Dash button'
@@ -14,10 +16,11 @@ version LifxDash::VERSION
 subcommand_option_handling :normal
 arguments :strict
 
-desc 'Set (and persist) default options for lifx_dash commands'
+desc 'Set (and persist) default options for commands'
 long_desc 'Use config to set default values for the command options, these will
 be saved to: ~/.lifx_dash.rc.yml and used as defaults. They can still be
 overridden with any arguments passed on the command line.'
+skips_pre
 command :config do |c|
   c.desc 'Show the config file'
   c.switch [:s, :show]
@@ -52,7 +55,7 @@ process.
 
 You can get a free LIFX API token from here: https://cloud.lifx.com/settings
 
-When running as a daemon, this command will log to: ~/tmp/lifx_dash.log'
+When running as a daemon, this command will log to: /tmp/lifx_dash.log'
 command :monitor do |c|
 
   c.desc 'Dash button MAC Address'
@@ -72,16 +75,31 @@ command :monitor do |c|
   c.flag [:i, :iface]
 
   c.desc 'Dameonize the monitor process'
-  c.default_value config_options[:daemonize].to_s == 'true'
   c.switch [:d, :daemonize]
 
   c.action do |global_options, options, args|
+    help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop #{options[:iface]}` to find it") unless options[:mac_address]
+    help_now!("a valid LIFX API Token option (-t) is required: get one from https://cloud.lifx.com/settings") unless options[:token]
+
+    if options[:daemonize]
+      LifxDash::Daemonizer.start
+    end
+
     LifxDash::Monitor.new(
       iface: options[:iface],
       token: options[:token],
       mac_address: options[:mac_address],
       selector: options[:selector]
     ).run
+  end
+end
+
+pre do |global_options, command, options, args|
+  # check user has root access for packet sniffing
+  if Process.euid.zero?
+    true
+  else
+    help_now!("sudo required: you must be a root user to capture packets on #{options[:iface]}")
   end
 end
 
