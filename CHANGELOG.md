@@ -5,11 +5,14 @@ project adheres to [Semantic Versioning][Semver].
 
 ## [Unreleased]
 
-  * WIP - add the actual command to do all the things
+  * Validation of command line flag vars, iface/mac/token etc.
+  * More unit test coverage
+  * Features for happy path of all commands
 
-## [0.0.1][] (~)
-  * TODO: include whats been added in the initial release of this gem
+## [0.0.1][] (30 Jun 2016)
+  * Initial gem release, config/help/snoop/monitor commands available
+  * Includes dameonizing option for monitor command (writing to a log file)
 
-[Unreleased]: https://github.com/matthutchinson/videosnap/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/matthutchinson/videosnap/releases/tag/v0.0.1
+[Unreleased]: https://github.com/matthutchinson/lifx_dash/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/matthutchinson/lifx_dash/releases/tag/v0.0.1
 [Semver]: http://semver.org

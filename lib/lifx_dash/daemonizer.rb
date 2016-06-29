@@ -14,7 +14,7 @@ module LifxDash
     # Free the STDIN/STDOUT/STDERR file descriptors and point them somewhere
     # sensible
     def self.redirect_io(log_file)
-      begin; STDIN.reopen '/dev/null'; rescue ::StandardError; end
+      STDIN.reopen '/dev/null'
 
       begin
         # ensure log file exists with good permissions
@@ -26,12 +26,14 @@ module LifxDash
         STDOUT.reopen log_file, 'a'
         STDOUT.sync = true
       rescue ::StandardError
-        begin; STDOUT.reopen '/dev/null'; rescue ::StandardError; end
+        STDOUT.reopen '/dev/null'
       end
 
       # reopen STERR stream to STDOUT (file stream)
-      begin; STDERR.reopen STDOUT; rescue ::StandardError; end
+      STDERR.reopen STDOUT
       STDERR.sync = true
+    rescue => e
+      raise "#{self} - error: could not redirect IO - #{e.message}"
     end
   end
 end
