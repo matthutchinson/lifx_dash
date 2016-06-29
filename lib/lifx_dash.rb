@@ -1,5 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('.')
 
+require "logger"
+
 require "lifx_dash/version"
 require "lifx_dash/capturer"
 require "lifx_dash/daemonizer"
