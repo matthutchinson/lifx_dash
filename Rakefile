@@ -14,10 +14,7 @@ end
 namespace :test do
   desc "Run all tests and features and generate a code coverage report"
   task :coverage do
-    if ENV['TRAVIS']
-      require 'coveralls'
-      Coveralls.wear!
-    else
+    unless ENV['TRAVIS']
       require 'simplecov'
       SimpleCov.start do
         add_filter '/test/'
