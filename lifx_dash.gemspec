@@ -15,10 +15,10 @@ Gem::Specification.new do |spec|
 
   spec.description   = <<-EOF
   A command line tool to listen for Amazon Dash button presses and toggle LIFX
-  lights ON or OFF (via the LIFX HTTP Cloud API). With options to configure: the
-  Dash MAC address, network interface and LIFX bulb selector. Inspired by Ted
+  lights ON or OFF (via the LIFX HTTP API). With options to configure: the Dash
+  MAC address, network interface and LIFX bulb selector. Inspired by Ted
   Benson's hack (http://tinyurl.com/zba3da2). Root (sudo) access is required for
-  network packet sniffing.
+  all network packet sniffing.
   EOF
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the
@@ -37,8 +37,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # documentation
-  spec.has_rdoc      = true
-  spec.extra_rdoc_files = ['README.md']
+  spec.has_rdoc         = true
+  spec.extra_rdoc_files = ['README.md', 'LICENSE.txt']
   spec.rdoc_options << '--title' << 'lifx_dash' << '--main' << 'README.md' << '-ri'
 
   # non-gem dependecies
@@ -47,6 +47,7 @@ Gem::Specification.new do |spec|
   spec.requirements << 'one or more LIFX bulbs'
   spec.requirements << 'root (sudo) access'
 
+  # external gems
   spec.add_runtime_dependency "gli", "2.14.0"
   spec.add_runtime_dependency "packetfu", "1.1.11"
 

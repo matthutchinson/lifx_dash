@@ -4,15 +4,15 @@ module LifxDash
     LOG_FILE = "/tmp/lifx_dash.log"
 
     def self.start(log_file = LOG_FILE)
-      # start daemon fork (skip IO redirect to /dev/null)
+      # fork process (skip IO redirect to /dev/null)
       Process.daemon(false, true)
-      # show pid and log file info on stdout
+      # show pid and log file info on stdout right away
       puts "[#{Process.pid}] Starting lifx_dash ... (daemon logging to #{log_file})"
       redirect_io(log_file)
     end
 
     # Free the STDIN/STDOUT/STDERR file descriptors and point them somewhere
-    # sensible
+    # sensible - inspired by daemons gem
     def self.redirect_io(log_file)
       STDIN.reopen '/dev/null'
 

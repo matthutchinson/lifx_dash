@@ -31,8 +31,7 @@ module LifxDash
       end
     rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, URI::InvalidURIError,
              Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError => e
-      logger.error "Error: POST request to #{BASE_URI} failed:"
-      logger.error e.message
+      logger.error "Error: POST request to #{BASE_URI} failed: #{e.message}"
       raise e
     end
 

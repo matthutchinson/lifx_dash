@@ -10,12 +10,12 @@ module LifxDash
     end
 
     def listen(&block)
-      # listen to packet stream
+      # examine packets on the stream
       capturer.stream.each do |packet|
-        # parse packets
         pkt = PacketFu::ARPPacket.parse(packet)
+        # parse packet header
         mac = PacketFu::EthHeader.str2mac(pkt.eth_src)
-        # execute block when ARP opcode is 1
+        # valid ARP pkt when opcode is 1
         if pkt.arp_opcode == 1
           block.call(pkt, mac) if block
         end
@@ -26,7 +26,7 @@ module LifxDash
     private
 
     def capturer
-      # filter and capture ARP packets
+      # filter and capture ARP packets on network interface
       @capturer ||= PacketFu::Capture.new(
         iface: @iface,
         start: true,

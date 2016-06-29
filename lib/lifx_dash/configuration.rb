@@ -21,7 +21,7 @@ module LifxDash
     end
 
     def run(show_config: false)
-      # decide to show config or do config
+      # decide to show config or start configuring
       show_config ? show : configure
     end
 
@@ -52,20 +52,13 @@ module LifxDash
     def ask_for_options
       OPTION_PROMPTS.keys.reduce({}) do |acc, key|
         print " * #{OPTION_PROMPTS[key]}: "
-        val = parse_user_input(STDIN.gets.strip)
-        acc.merge(key => val)
+        acc.merge(key => parse_user_input(STDIN.gets.strip))
       end
     end
 
     def parse_user_input(str)
-      # handle booleans, numbers and blanks
-      if str =~ /^[Y|y][es]?/
-        true
-      elsif str =~ /^[N|n][o]?/
-        false
-      elsif str =~ /^[0-9]+$/
-        str.to_i
-      elsif str.empty?
+      # handle empty strings
+      if str.empty?
         nil
       else
         str

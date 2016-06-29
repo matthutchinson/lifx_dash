@@ -9,10 +9,11 @@ project adheres to [Semantic Versioning][Semver].
   * More unit test coverage
   * Features for happy path of all commands
 
-## [0.0.1][] (30 Jun 2016)
-  * Initial gem release, config/help/snoop/monitor commands available
+## [0.1.0][] (30 Jun 2016)
+  * Initial gem release, config/help/snoop/monitor commands working
   * Includes dameonizing option for monitor command (writing to a log file)
+  * Built with gli command-suite gem
 
-[Unreleased]: https://github.com/matthutchinson/lifx_dash/compare/v0.0.1...HEAD
-[0.0.1]: https://github.com/matthutchinson/lifx_dash/releases/tag/v0.0.1
+[Unreleased]: https://github.com/matthutchinson/lifx_dash/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/matthutchinson/lifx_dash/releases/tag/v0.1.0
 [Semver]: http://semver.org

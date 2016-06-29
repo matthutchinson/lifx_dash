@@ -44,8 +44,7 @@ class TestLifxHTTPApi <  MiniTest::Unit::TestCase
   def test_raises_error_on_toggle_when_http_errors
     assert_raises(Errno::ECONNRESET) do
       @logger.expect(:info, nil, ["Toggling lights! (via #{LifxDash::LifxHTTPApi::BASE_URI})"])
-      @logger.expect(:error, nil, ["Error: POST request to #{LifxDash::LifxHTTPApi::BASE_URI} failed:"])
-      @logger.expect(:error, nil, ["Connection reset by peer"])
+      @logger.expect(:error, nil, ["Error: POST request to #{LifxDash::LifxHTTPApi::BASE_URI} failed: Connection reset by peer"])
 
       net_error = -> (uri) { raise Errno::ECONNRESET.new }
       Net::HTTP::Post.stub :new, net_error do
@@ -59,8 +58,7 @@ class TestLifxHTTPApi <  MiniTest::Unit::TestCase
   def test_raises_error_on_toggle_with_bad_selector
     assert_raises(URI::InvalidURIError) do
       bad_selector = "im a bad bulb selector"
-      @logger.expect(:error, nil, ["Error: POST request to #{LifxDash::LifxHTTPApi::BASE_URI} failed:"])
-      @logger.expect(:error, nil, ["bad URI(is not URI?): #{lifx_url(bad_selector)}"])
+      @logger.expect(:error, nil, ["Error: POST request to #{LifxDash::LifxHTTPApi::BASE_URI} failed: bad URI(is not URI?): #{lifx_url(bad_selector)}"])
       @api_client.toggle(bad_selector)
 
       assert @logger.verify
