@@ -7,10 +7,6 @@ class TestLifxHTTPApi <  MiniTest::Unit::TestCase
     @api_client = LifxDash::LifxHTTPApi.new('my-token', @logger)
   end
 
-  def test_should_have_a_token
-    assert_equal @api_client.token, 'my-token'
-  end
-
   def test_toggles_lights_logging_successful
     selector = "d073d500ec8e"
     body = { results: [{ id: "d073d500ec8e", label: "Golden Boy", status: "ok" } ]}.to_json
@@ -27,9 +23,9 @@ class TestLifxHTTPApi <  MiniTest::Unit::TestCase
   def test_toggles_lights_logging_warnings
     selector = "all"
     http_responses = {
-      401 => { error: "Invalid token" },
-      500 => nil,
-      207 => "{}"
+      401 => { error: "Invalid token" }, # invalid token in header
+      500 => nil, # server issue
+      207 => "{}" # server OK, but results not present
     }
 
     http_responses.each do |code, api_response_body|
