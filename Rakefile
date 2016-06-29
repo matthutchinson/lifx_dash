@@ -2,11 +2,7 @@ require "bundler/gem_tasks"
 require "rake/testtask"
 require "cucumber"
 require "cucumber/rake/task"
-
-Cucumber::Rake::Task.new(:features) do |t|
-  t.cucumber_opts = "features --format pretty -x"
-  t.fork = false
-end
+require 'rdoc/task'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -14,19 +10,37 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*_test.rb']
 end
 
-task :default => [:test, :features]
-
-# test with code coverage
+# test with code coverage (default)
 namespace :test do
-  desc "Run all tests and generate a code coverage report (simplecov)"
+  desc "Run all tests and features and generate a code coverage report"
   task :coverage do
-    ENV['COVERAGE'] = 'true'
+    if ENV['TRAVIS']
+      require 'coveralls'
+      Coveralls.wear!
+    else
+      require 'simplecov'
+      SimpleCov.start do
+        add_filter '/test/'
+        add_filter '/features/'
+        add_filter '/vendor/'
+      end
+      SimpleCov.at_exit do
+        SimpleCov.result.format!
+        `open ./coverage/index.html` if RUBY_PLATFORM =~ /darwin/
+      end
+    end
+
     Rake::Task['test'].execute
+    Rake::Task['features'].execute
   end
 end
 
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format pretty -x"
+  t.fork = false
+end
+
 # generate docs
-require 'rdoc/task'
 RDoc::Task.new do |rd|
   rd.main     = "README.md"
   rd.title    = 'lifx_dash'
@@ -34,3 +48,5 @@ RDoc::Task.new do |rd|
   rd.options  << "--all"
   rd.rdoc_files.include("README.md", "LICENSE.txt", "lib/**/*.rb", "bin/**/*")
 end
+
+task :default => ['test:coverage']
