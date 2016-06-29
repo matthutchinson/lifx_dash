@@ -18,3 +18,7 @@ matrix:
 branches:
   except:
     - gh-pages
+
+addons:
+  code_climate:
+    repo_token: 71107cb58f585bf7506e53f33238f4bd4e9aa87215ed916a5b466ecd9b493209
