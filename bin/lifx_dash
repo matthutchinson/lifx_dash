@@ -24,7 +24,7 @@ command :config do |c|
   c.desc "Show the config file"
   c.switch [:s, :show]
 
-  c.action do |global_options, options, args|
+  c.action do |_global_options, options, _args|
     LifxDash::Configuration.new.run(show_config: options["show"])
   end
 end
@@ -40,7 +40,7 @@ command :snoop do |c|
   c.default_value config_options["iface"] || "en0"
   c.flag [:i, :iface]
 
-  c.action do |global_options, options, args|
+  c.action do |_global_options, options, _args|
     LifxDash::Snoop.new(options["iface"]).run
   end
 end
@@ -82,7 +82,7 @@ command :monitor do |c|
   c.desc "Dameonize the monitor process"
   c.switch [:d, :daemonize]
 
-  c.action do |global_options, options, args|
+  c.action do |_global_options, options, _args|
     help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop #{options["iface"]}` to find it") unless options["mac-address"]
     help_now!("a valid LIFX API Token option (-t) is required: get one from https://cloud.lifx.com/settings") unless options["token"]
 
@@ -99,7 +99,7 @@ command :monitor do |c|
   end
 end
 
-pre do |global_options, command, options, args|
+pre do |_global_options, _command, options, _args|
   # check user has root access for packet sniffing
   if Process.euid.zero?
     true

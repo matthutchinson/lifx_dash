@@ -13,7 +13,7 @@ module LifxDash
       puts " * you might get more than 1 ARP packet when pressing, use the MAC address that occurs once\n\n"
 
       LifxDash::Capturer.new(iface).listen do |pkt, mac|
-        LOGGER.info "possible Dash button press from MAC address: #{mac}"
+        LOGGER.info "possible Dash button press from MAC address: #{mac} -- pkt summary: #{pkt.peek}"
       end
     end
   end

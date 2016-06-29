@@ -13,7 +13,7 @@ module LifxDash
     }
 
     def self.load
-      if File.exists?(CONFIG_FILE)
+      if File.exist?(CONFIG_FILE)
         YAML.load_file(CONFIG_FILE)
       else
         {}
@@ -26,7 +26,7 @@ module LifxDash
     end
 
     def show
-      if File.exists?(CONFIG_FILE)
+      if File.exist?(CONFIG_FILE)
         puts "Configuration file at #{CONFIG_FILE} ...\n\n"
         puts File.read(CONFIG_FILE)
         puts "\nChange these options with `lifx_dash config`"

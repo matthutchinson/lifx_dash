@@ -14,8 +14,11 @@ module LifxDash
       puts "Starting lifx_dash monitor ..."
       puts " * listening on #{iface} for Dash button #{mac} presses to toggle #{selector} bulb(s)"
 
-      LifxDash::Capturer.new(iface).listen do |pkt, source_mac_addr|
-        lifx_api.toggle(selector) if source_mac_addr == mac
+      LifxDash::Capturer.new(iface).listen do |_pkt, source_mac_addr|
+        if source_mac_addr == mac
+          LOGGER.info "detected Dash button press from MAC address: #{mac} -- pkt summary: #{pkt.peek}"
+          lifx_api.toggle(selector)
+        end
       end
     end
 
