@@ -4,6 +4,8 @@ require "cucumber"
 require "cucumber/rake/task"
 require 'rdoc/task'
 
+task :default => ['test:coverage']
+
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
   t.libs << "lib"
@@ -14,19 +16,7 @@ end
 namespace :test do
   desc "Run all tests and features and generate a code coverage report"
   task :coverage do
-    unless ENV['TRAVIS']
-      require 'simplecov'
-      SimpleCov.start do
-        add_filter '/test/'
-        add_filter '/features/'
-        add_filter '/vendor/'
-      end
-      SimpleCov.at_exit do
-        SimpleCov.result.format!
-        `open ./coverage/index.html` if RUBY_PLATFORM =~ /darwin/
-      end
-    end
-
+    ENV['COVERAGE'] = 'true'
     Rake::Task['test'].execute
     Rake::Task['features'].execute
   end
@@ -46,4 +36,3 @@ RDoc::Task.new do |rd|
   rd.rdoc_files.include("README.md", "LICENSE.txt", "lib/**/*.rb", "bin/**/*")
 end
 
-task :default => ['test:coverage']
