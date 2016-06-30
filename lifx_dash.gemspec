@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.0.0"
   spec.requirements << 'an Amazon Dash button'
   spec.requirements << 'one or more LIFX bulbs'
-  spec.requirements << 'root (sudo) access'
+  spec.requirements << 'root access'
 
   # external gems
   spec.add_runtime_dependency "gli", "2.14.0"

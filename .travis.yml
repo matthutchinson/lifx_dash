@@ -1,20 +1,26 @@
 sudo: required
 language: ruby
 before_install:
-  - sudo apt-get install libpcap-dev -qq
-  - gem update --system
-  - gem --version
+- sudo apt-get install libpcap-dev -qq
+- gem update --system
+- gem --version
 rvm:
-  - 2.0.0
-  - 2.1.10
-  - 2.2.5
-  - 2.3.1
-  - ruby-head
-
+- 2.0.0
+- 2.1.10
+- 2.2.5
+- 2.3.1
+- ruby-head
 matrix:
   allow_failures:
-    - rvm: ruby-head
-
+  - rvm: ruby-head
 branches:
   except:
-    - gh-pages
+  - gh-pages
+deploy:
+  provider: rubygems
+  api_key:
+    secure: euHHSO+aPoarCl+Xa5ZBl4yrIAzaXFbMjgDhrNRFhNiRWr49HQ0pPQXGKw1zTL+WfWniLTfMTl7gk7cqRQiqoyod5iqiyvd8z3NQqL6hyNJjZ9ZVpZzA8dYmag5AO4mxf2b/v68CbnuR5O0V8UZZ31dGq0LyZh0y+wwMP7AmKzoJz5IfbzRA3E94uOSoa/1177BacTbJGXVxtJTfMeOS08RcGyK/DyEZsmPXoEfhDoKS3xAG5+rJiLuLvKDO2A/xoVKxtFWGPdX1n+Y3EUc/nWZ7a/ye96S8+27fzphb5X1jN3/ebc0nueWmq4lx1wI18j6nbuVQ9uk/RQHFv/ArFmIE0cpwH2/8YdhMgXUOpfjcWKoZH2eG/4l2/Oz8S2m3UN0MrXOpAzcb/wd9EGIoA08B31aykco2170CXVBeMaKksGcOr34RCirz2t8jXMEOzgN5e6jxjot+y/3XH+nPDU5pWRQoR6hzJPQLvXUgszF4X9AbrFWJR/xO3j8HQieNm0YPdP78PgpN/k1A2o/YJsQ1qsRyl8QtVKweX3wN0Ssyk433VkJEDFSQGPImtVqyTjcCgjyYeqxkzJfqiyIqe531JSXiZttjxj67oTpuASVTRIjotazjN03qohhv009fi+4BQGd6fX4QL9BylHC1ft0eQjIkzILrzAIY4LoLfa8=
+  gem: lifx_dash
+  on:
+    tags: true
+    repo: matthutchinson/lifx_dash
