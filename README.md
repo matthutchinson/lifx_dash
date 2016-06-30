@@ -6,6 +6,8 @@
 [![Code Climate](https://codeclimate.com/github/matthutchinson/lifx_dash/badges/gpa.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash)
 [![Gem Dependency Status](https://gemnasium.com/matthutchinson/lifx_dash.svg)](https://gemnasium.com/matthutchinson/lifx_dash)
 
+![Amazon LIFX Dash Button](http://matthutchinson.github.io/lifx_dash/images/lifx_dash.png)
+
 `lifx_dash` is a simple command-line tool to monitor your network for [Amazon
 Dash button](https://www.amazon.com/Dash-Buttons/b?ie=UTF8&node=10667898011)
 presses and toggle [LIFX](http://www.lifx.com) lights ON and OFF. The tool
