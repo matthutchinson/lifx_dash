@@ -209,6 +209,7 @@ If you'd like to get involved in contributing, here are some ideas:
 * Show existing values in config, when configuring, allowing edits (with readline)
 * More Rdoc documentation on command classes
 * New optional flag for the configuration file location
+* Handle CTRL-C and kill signals with better exit/cleanup messages
 * Use LIFX LAN API (with a command switch to choose LAN/HTTP)
 
 ## License
