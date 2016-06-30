@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Lifx dash by matthutchinson</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Lifx dash</h1>
+        <p>Toggle LIFX lights with an Amazon Dash button</p>
+
+        <p class="view"><a href="https://github.com/matthutchinson/lifx_dash">View the Project on GitHub <small>matthutchinson/lifx_dash</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/matthutchinson/lifx_dash/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/matthutchinson/lifx_dash/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/matthutchinson/lifx_dash">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="lifxdash" class="anchor" href="#lifxdash" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LifxDash</h1>
+
+<p><code>lifx_dash</code> is a simple command-line tool to monitor your network for <a href="https://www.amazon.com/Dash-Buttons/b?ie=UTF8&amp;node=10667898011">Amazon
+Dash button</a>
+presses and toggle <a href="http://www.lifx.com">LIFX</a> lights ON and OFF. The tool
+provides two commands, <code>monitor</code> and <code>snoop</code>.</p>
+
+<p>Use <code>snoop</code> to listen for Dash presses on your network, and identify the
+button's MAC address.</p>
+
+<p>Use <code>monitor</code> (with a MAC address and LIFX HTTP API token) to respond to
+presses, and toggle your lights ON and OFF. You can optionally pass a bulb
+selector, or choose to daemonize the <code>monitor</code> process.</p>
+
+<p>A <code>config</code> command also exists, allowing you to set default options for
+<code>monitor</code> and <code>snoop</code>.</p>
+
+<h2>
+<a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
+
+<p><code>lifx_dash</code> requires at least one LIFX bulb, and any Amazon Dash button. You
+will also need a wifi network and root access to sniff packets on your network
+adaptor.</p>
+
+<p><code>lifx_dash</code> is distributed via <a href="https://rubygems.org">RubyGems</a> and requires
+<a href="https://www.ruby-lang.org">Ruby</a> &gt;= 2.0.0.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<pre><code>gem install lifx_dash
+</code></pre>
+
+<p>The <code>lifx_dash</code> command will now be available in your PATH.</p>
+
+<h3>
+<a id="dash-button-setup" class="anchor" href="#dash-button-setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dash Button Setup</h3>
+
+<p>Follow Amazon's Dash button setup steps, but <strong>stop</strong> before choosing any
+particular product to purchase. If necessary, you can <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=201746400">factory
+reset</a>
+your button and start the setup from scratch.</p>
+
+<p>Next use the <code>snoop</code> command to determine the button's MAC address:</p>
+
+<pre><code>$ sudo lifx_dash snoop -i en0
+</code></pre>
+
+<p>This will listen on network interface 'en0' for ARP packets from any Dash
+button. Take a note of the MAC address that's logged when you press. To list
+network interfaces on your machine use:</p>
+
+<pre><code>$ ifconfig
+# or
+$ ifconfig -l
+</code></pre>
+
+<h4>
+<a id="snooping-tips" class="anchor" href="#snooping-tips" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Snooping Tips</h4>
+
+<p>Wait for the network to quiet down, before pressing the button, since other
+devices may respond with ARP packets of their own when you press. Take care to
+choose the MAC address from the ARP packet that occurs only once from a single
+MAC address.</p>
+
+<h3>
+<a id="lifx-bulb-setup" class="anchor" href="#lifx-bulb-setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LIFX Bulb Setup</h3>
+
+<p>Create a <a href="https://cloud.lifx.com/settings">personal token</a> for the LIFX HTTP
+API.</p>
+
+<p>By default <code>lifx_dash</code> will toggle <em>ALL</em> bulbs. To toggle a specific light you
+will need to find the LIFX Bulb ID.</p>
+
+<p>Visit the LIFX API <a href="https://api.developer.lifx.com/docs/list-lights">list
+lights</a> doc and use the 'Try It
+Out' form with your token. Details for all bulbs on your network will be shown
+along with their IDs (in JSON format).</p>
+
+<p>Or call the API directly with this curl command:</p>
+
+<pre><code>$ curl "https://api.lifx.com/v1/lights/all" -H "Authorization: Bearer LIFX_API_TOKEN"
+</code></pre>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To start the <code>lifx_dash</code> monitor:</p>
+
+<pre><code>$ sudo lifx_dash monitor --token=LIFX_API_TOKEN --mac-address=DASH_MAC_ADDRESS --selector='all' --iface=en0
+Starting lifx_dash monitor ...
+</code></pre>
+
+<p>This starts a long-running process listening on 'en0', for button presses (from
+the given MAC address). When a press occurs, the monitor will toggle all LIFX
+bulbs.</p>
+
+<p>Only the <code>--mac-address</code> and <code>--token</code> options are required, by default
+<code>--selector=all</code> and <code>--iface=en0</code>. You can also use short-form flag options
+like so:</p>
+
+<pre><code>$ sudo lifx_dash monitor -t LIFX_API_TOKEN -m DASH_MAC_ADDRESS -s 'all' -i en0
+</code></pre>
+
+<h3>
+<a id="running-as-a-daemon" class="anchor" href="#running-as-a-daemon" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Running as a Daemon</h3>
+
+<p>Use the <code>-d</code> switch (or <code>--daemonize</code>) to run <code>monitor</code> as a daemon:</p>
+
+<pre><code>$ sudo lifx_dash monitor -t LIFX_API_TOKEN -m DASH_MAC_ADDRESS -s 'all' -i en0 -d
+[17099] Starting lifx_dash ... (daemon logging to /tmp/lifx_dash.log)
+</code></pre>
+
+<p>The command will log to <code>/tmp/lifx_dash.log</code> by default (creating the file and
+folder if it does not exist). Use <code>-l</code> or <code>--log-file</code> to override this
+location.</p>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>You can save option defaults using the <code>config</code> command:</p>
+
+<pre><code>$ lifx_dash config
+Configuring lifx_dash ...
+</code></pre>
+
+<p>You will be prompted for values for each option and your choices will be stored
+at <code>~/.lifx_dash.rc.yml</code>.</p>
+
+<p>An empty answer will mean no value is set, and the option reverts to it's
+default. Passing options on the command-line always takes precedence over
+your saved configuration.</p>
+
+<p>You can inspect the current configuration file options with:</p>
+
+<pre><code>$ lifx_dash config --show
+</code></pre>
+
+<h2>
+<a id="help" class="anchor" href="#help" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Help</h2>
+
+<p>You can get help in number of ways, for example:</p>
+
+<pre><code>$ lifx_dash help
+$ lifx_dash help monitor
+$ lifx_dash snoop -h
+$ lifx_dash config --help
+</code></pre>
+
+<p>The gem also comes packaged with its own <a href="http://htmlpreview.github.io/?https://raw.githubusercontent.com/matthutchinson/lifx_dash/master/man/lifx_dash.1.html">man
+page</a>.
+You'll need <a href="https://github.com/defunkt/gem-man">gem-man</a> to view this from your
+command line.</p>
+
+<h2>
+<a id="troubles" class="anchor" href="#troubles" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Troubles?</h2>
+
+<p>If you think something is broken or missing, do raise a new
+<a href="https://github.com/matthutchinson/lifx_dash/issues">issue</a>. Please remember to
+take a moment and check it hasn't already been raised (and possibly closed).</p>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<p>The gem is available as open source under the terms of the <a href="http://opensource.org/licenses/MIT">MIT
+License</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/matthutchinson">matthutchinson</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
