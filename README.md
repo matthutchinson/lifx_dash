@@ -207,6 +207,7 @@ If you'd like to get involved in contributing, here are some ideas:
 * Aruba features covering the happy paths for all commands
 * Smarter config, auto-snoop, list bulbs with names and choose id
 * Show existing values in config, when configuring, allowing edits (with readline)
+* More Rdoc documentation on command classes
 * New optional flag for the configuration file location
 * Use LIFX LAN API (with a command switch to choose LAN/HTTP)
 
