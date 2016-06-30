@@ -16,22 +16,22 @@
 \fBlifx_dash\fR \fBconfig\fR
 .
 .SH "DESCRIPTION"
-\fBlifx_dash\fR is a simple command\-line tool to monitor your network for Amazon Dash button presses and toggle LIFX lights ON or OFF\. The tool comes with two main commands, \fBmonitor\fR and \fBsnoop\fR\.
+\fBlifx_dash\fR is a simple command\-line tool to monitor your network for Amazon Dash button presses and toggle LIFX lights ON and OFF\. The tool provides two commands, \fBmonitor\fR and \fBsnoop\fR\.
 .
 .P
-Use \fBsnoop\fR to scan your network for Dash button presses to identify your Dash button MAC address\.
+Use \fBsnoop\fR to listen for Dash presses on your network, and identify the button\'s MAC address\.
 .
 .P
-Use \fBmonitor\fR (with a MAC address and LIFX HTTP API token) to listen for Dash button presses and toggle your lights ON or OFF\. You can optionally pass a LIFX bulb selector (the bulb ID), or choose to daemonize the \fBmonitor\fR process\.
+Use \fBmonitor\fR (with a MAC address and LIFX HTTP API token) to respond to presses, and toggle your lights ON and OFF\. You can optionally pass a bulb selector, or choose to daemonize the \fBmonitor\fR process\.
 .
 .P
-Use the \fBconfig\fR command to set default options for the \fBmonitor\fR and \fBsnoop\fR commands (saved to ~/\.lifx_dash\.rc\.yml)\.
+A \fBconfig\fR command also exists, allowing you to set default options for \fBmonitor\fR and \fBsnoop\fR\.
 .
 .SH "REQUIREMENTS"
-\fBlifx_dash\fR requires at least one LIFX bulb, and any Amazon Dash button\. During Amazon\'s Dash button setup process, complete all the steps except the last one, do NOT select any particular product to be ordered\. You will also need a Wifi network and sudo (root) access to allow your network adaptor to sniff for packets\.
+\fBlifx_dash\fR requires at least one LIFX bulb, and any Amazon Dash button\. You will also need a wifi network and root access to sniff packets on your network adaptor\.
 .
 .P
-You can get a free LIFX API token from here: \fIhttps://cloud\.lifx\.com/settings\fR
+Follow Amazon\'s Dash button setup steps, but \fBstop\fR before choosing any particular product to purchase\. You aill also need a free LIFX API token from here: \fIhttps://cloud\.lifx\.com/settings\fR
 .
 .SH "OPTIONS"
 The snoop command has one optional flag, the network interface to listen on\.
@@ -40,6 +40,9 @@ The snoop command has one optional flag, the network interface to listen on\.
 \fB\-i\fR, \fB\-\-iface=arg\fR: Network Interface (default: en0)
 .
 .IP "" 0
+.
+.P
+Wait for the network to quiet down, before pressing the button, since other devices may respond with ARP packets of their own when you press\. Take care to choose the MAC address from the ARP packet that occurs only once from a single MAC address\.
 .
 .P
 The \fBmonitor\fR command accepts the following flags, both a mac address and api token are required\.
@@ -112,7 +115,7 @@ Monitor Dash button presses on en1 with a DASH_MAC_ADDRESS and LIFX_API_TOKEN, w
 .
 .nf
 
-$ lifx_dash monitor \-\-token=LIFX_API_TOKEN \-\-mac=DASH_MAC_ADDRESS \-s \'d3b2f2d97459\' en1
+$ lifx_dash monitor \-\-token=LIFX_API_TOKEN \-\-mac\-address=DASH_MAC_ADDRESS \-s \'d3b2f2d97459\' \-i en1
 .
 .fi
 .

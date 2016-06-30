@@ -15,10 +15,10 @@ Gem::Specification.new do |spec|
 
   spec.description   = <<-EOF
   A command line tool to listen for Amazon Dash button presses and toggle LIFX
-  lights ON or OFF (via the LIFX HTTP API). With options to configure: the Dash
+  lights ON and OFF (via the LIFX HTTP API). With options to configure: the Dash
   MAC address, network interface and LIFX bulb selector. Inspired by Ted
-  Benson's hack (http://tinyurl.com/zba3da2). Root (sudo) access is required for
-  all network packet sniffing.
+  Benson's hack (http://tinyurl.com/zba3da2). Root access is required for
+  network packet sniffing.
   EOF
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the

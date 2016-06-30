@@ -5,9 +5,7 @@ project adheres to [Semantic Versioning][Semver].
 
 ## [Unreleased]
 
-  * Validation of command line flag vars, iface/mac/token etc.
-  * More unit test coverage
-  * Features for happy path of all commands
+  * Validation of all command line flag values, iface/mac/token etc.
 
 ## [0.1.0][] (30 Jun 2016)
   * Initial gem release, config/help/snoop/monitor commands working

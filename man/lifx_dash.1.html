@@ -87,29 +87,28 @@
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
 <p><strong>lifx_dash</strong> is a simple command-line tool to monitor your network for Amazon
-Dash button presses and toggle LIFX lights ON or OFF. The tool comes with two
-main commands, <code>monitor</code> and <code>snoop</code>.</p>
+Dash button presses and toggle LIFX lights ON and OFF. The tool provides two
+commands, <code>monitor</code> and <code>snoop</code>.</p>
 
-<p>Use <code>snoop</code> to scan your network for Dash button presses to identify your Dash
-button MAC address.</p>
+<p>Use <code>snoop</code> to listen for Dash presses on your network, and identify the
+button's MAC address.</p>
 
-<p>Use <code>monitor</code> (with a MAC address and LIFX HTTP API token) to listen for Dash
-button presses and toggle your lights ON or OFF. You can optionally pass a LIFX
-bulb selector (the bulb ID), or choose to daemonize the <code>monitor</code> process.</p>
+<p>Use <code>monitor</code> (with a MAC address and LIFX HTTP API token) to respond to
+presses, and toggle your lights ON and OFF. You can optionally pass a bulb
+selector, or choose to daemonize the <code>monitor</code> process.</p>
 
-<p>Use the <code>config</code> command to set default options for the <code>monitor</code> and <code>snoop</code>
-commands (saved to ~/.lifx_dash.rc.yml).</p>
+<p>A <code>config</code> command also exists, allowing you to set default options for
+<code>monitor</code> and <code>snoop</code>.</p>
 
 <h2 id="REQUIREMENTS">REQUIREMENTS</h2>
 
-<p><code>lifx_dash</code> requires at least one LIFX bulb, and any Amazon Dash button. During
-Amazon's Dash button setup process, complete all the steps except the last one,
-do NOT select any particular product to be ordered. You will also need a Wifi
-network and sudo (root) access to allow your network adaptor to sniff for
-packets.</p>
+<p><code>lifx_dash</code> requires at least one LIFX bulb, and any Amazon Dash button. You
+will also need a wifi network and root access to sniff packets on your network
+adaptor.</p>
 
-<p>You can get a free LIFX API token from here:
-<a href="https://cloud.lifx.com/settings" data-bare-link="true">https://cloud.lifx.com/settings</a></p>
+<p>Follow Amazon's Dash button setup steps, but <strong>stop</strong> before choosing any
+particular product to purchase. You aill also need a free LIFX API token from
+here: <a href="https://cloud.lifx.com/settings" data-bare-link="true">https://cloud.lifx.com/settings</a></p>
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
@@ -119,6 +118,11 @@ packets.</p>
 <li><code>-i</code>, <code>--iface=arg</code>: Network Interface (default: en0)</li>
 </ul>
 
+
+<p>Wait for the network to quiet down, before pressing the button, since other
+devices may respond with ARP packets of their own when you press. Take care to
+choose the MAC address from the ARP packet that occurs only once from a single
+MAC address.</p>
 
 <p>The <code>monitor</code> command accepts the following flags, both a mac address and api
 token are required.</p>
@@ -156,7 +160,7 @@ when pressed, toggle all lights</p>
 <p>Monitor Dash button presses on en1 with a DASH_MAC_ADDRESS and LIFX_API_TOKEN,
 when pressed toggle the light with id 'd3b2f2d97459'</p>
 
-<pre><code>$ lifx_dash monitor --token=LIFX_API_TOKEN --mac=DASH_MAC_ADDRESS -s 'd3b2f2d97459' en1
+<pre><code>$ lifx_dash monitor --token=LIFX_API_TOKEN --mac-address=DASH_MAC_ADDRESS -s 'd3b2f2d97459' -i en1
 </code></pre>
 
 <p>Show the current configuration file options</p>

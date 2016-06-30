@@ -32,9 +32,10 @@ end
 
 desc "Listen for Dash button presses on the network and show packet information"
 long_desc "Monitor the sepcified network interface for any Dash button ARP
-packets and log the device MAC address to stdout. On pressing a Dash button the
-monitor may pick up ARP packets from other devices on the network. Identify the
-Dash button MAC address from the packet that occurs only once."
+packets and log the device MAC address to stdout. Wait for the network to quiet
+down, before pressing the button, since other devices may respond with ARP
+packets of their own when you press. Take care to choose the MAC address from
+the ARP packet that occurs only once from a single MAC address."
 command :snoop do |c|
   c.desc "Network Interface"
   c.default_value config_options["iface"] || "en0"
@@ -47,7 +48,7 @@ end
 
 desc "Listen for a Dash button press, and the toggle selected lights"
 long_desc "Monitor the sepcified network interface, filtered by a Dash button
-MAC address.  If a valid ARP packet is detected, the LIFX lights (identified by
+MAC address. If a valid ARP packet is detected, the LIFX lights (identified by
 the selector) will be toggled using the LIFX HTTP API (v1). You can optionally
 pass a LIFX bulb selector (the bulb ID), or choose to daemonize the `monitor`
 process.
@@ -56,7 +57,7 @@ You can get a free LIFX API token from here: https://cloud.lifx.com/settings
 
 If running as a daemon (-d switch), this command will log to:
 #{LifxDash::Daemonizer::LOG_FILE} by default. Use the --log-file flag to
-overrride this."
+overrride this location."
 command :monitor do |c|
 
   c.desc "Dash button MAC address"
