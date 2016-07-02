@@ -13,13 +13,7 @@ module LifxDash
     }
 
     def [](key)
-      @config_options ||= begin
-        if File.exist?(config_file)
-          YAML.load_file(config_file)
-        else
-          {}
-        end
-      end[key]
+      config_options[key]
     end
 
     def show
@@ -46,6 +40,8 @@ module LifxDash
       end
     end
 
+    private
+
     def config_file
       @config_file ||= begin
         home_dir = ENV["HOME"]
@@ -61,14 +57,22 @@ module LifxDash
       end
     end
 
+    def config_options
+      @config_options ||= begin
+        if File.exist?(config_file)
+          YAML.load_file(config_file)
+        else
+          {}
+        end
+      end
+    end
+
     def ask_for_options
       OPTION_PROMPTS.keys.reduce({}) do |acc, key|
         print " * #{OPTION_PROMPTS[key]}: "
         acc.merge(key => parse_user_input(STDIN.gets.strip))
       end
     end
-
-    private
 
     def platform
       case RbConfig::CONFIG['host_os']
