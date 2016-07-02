@@ -43,6 +43,7 @@ Gem::Specification.new do |spec|
 
   # non-gem dependecies
   spec.required_ruby_version = ">= 2.0.0"
+  spec.requirements << 'libpcap'
   spec.requirements << 'an Amazon Dash button'
   spec.requirements << 'one or more LIFX bulbs'
   spec.requirements << 'root access'

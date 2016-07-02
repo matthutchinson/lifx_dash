@@ -84,7 +84,7 @@ command :monitor do |c|
   c.switch [:d, :daemonize]
 
   c.action do |_global_options, options, _args|
-    help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop #{options["iface"]}` to find it") unless options["mac-address"]
+    help_now!("a valid Dash button MAC address option (-m) is required: use `lifx_dash snoop -i #{options["iface"]}` to find it") unless options["mac-address"]
     help_now!("a valid LIFX API Token option (-t) is required: get one from https://cloud.lifx.com/settings") unless options["token"]
 
     if options["daemonize"]

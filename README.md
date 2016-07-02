@@ -29,6 +29,15 @@ A `config` command also exists, allowing you to set default options for
 will also need a wifi network and root access to sniff packets on your network
 adaptor.
 
+This gem uses [packet_fu](https://rubygems.org/gems/packetfu) which in turn
+requires the [libpcap](http://www.tcpdump.org) library. This is probably already
+available on your machine, if not download the [latest
+release](http://www.tcpdump.org/#latest-release) or install with your package
+manager e.g.:
+
+    sudo apt-get install libpcap0.8-dev  # UNIX
+    brew install libpcap                 # homebrew on OSX
+
 `lifx_dash` is distributed via [RubyGems](https://rubygems.org) and requires
 [Ruby](https://www.ruby-lang.org) >= 2.0.0.
 
