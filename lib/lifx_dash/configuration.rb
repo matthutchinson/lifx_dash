@@ -3,8 +3,8 @@ require "yaml"
 module LifxDash
   class Configuration
 
-    CONFIG_FILE    = File.join(ENV["HOME"], ".lifx_dash.rc.yml")
-    OPTION_PROMPTS = {
+    CONFIG_FILE_NAME = ".lifx_dash.rc.yml"
+    OPTION_PROMPTS   = {
       "iface"       => "Network interface identifier e.g. en0 (choose from ifconfig -l)",
       "token"       => "LIFX API token (get a free personal token at cloud.lifx.com)",
       "mac-address" => "Dash button MAC address (use lifx_dash snoop to find it)",
@@ -12,26 +12,23 @@ module LifxDash
       "log-file"    => "Log file location (when running as a daemon)"
     }
 
-    def self.load
-      if File.exist?(CONFIG_FILE)
-        YAML.load_file(CONFIG_FILE)
-      else
-        {}
-      end
-    end
-
-    def run(show_config: false)
-      # decide to show config or start configuring
-      show_config ? show : configure
+    def [](key)
+      @config_options ||= begin
+        if File.exist?(config_file)
+          YAML.load_file(config_file)
+        else
+          {}
+        end
+      end[key]
     end
 
     def show
-      if File.exist?(CONFIG_FILE)
-        puts "Configuration file at #{CONFIG_FILE} ...\n\n"
-        puts File.read(CONFIG_FILE)
+      if File.exist?(config_file)
+        puts "Configuration file at #{config_file} ...\n\n"
+        puts File.read(config_file)
         puts "\nChange these options with `lifx_dash config`"
       else
-        puts "No configuration file exists at #{CONFIG_FILE}"
+        puts "No configuration file exists at #{config_file}"
       end
     end
 
@@ -42,10 +39,25 @@ module LifxDash
       if user_options.values.all?(&:nil?)
         puts "\nNo options set, configuration is unchanged"
       else
-        File.open(CONFIG_FILE, "w") do |file|
+        File.open(config_file, "w") do |file|
           YAML::dump(user_options, file)
         end
-        puts "\nConfiguration saved to #{CONFIG_FILE}"
+        puts "\nConfiguration saved to #{config_file}"
+      end
+    end
+
+    def config_file
+      @config_file ||= begin
+        home_dir = ENV["HOME"]
+
+        # when running as sudo on linux, use the sudo users' home dir
+        if platform == :linux &&
+             ENV["SUDO_USER"] &&
+             File.exist?("/home/#{ENV["SUDO_USER"]}")
+          home_dir = "/home/#{ENV["SUDO_USER"]}"
+        end
+
+        File.join(home_dir, CONFIG_FILE_NAME)
       end
     end
 
@@ -53,6 +65,21 @@ module LifxDash
       OPTION_PROMPTS.keys.reduce({}) do |acc, key|
         print " * #{OPTION_PROMPTS[key]}: "
         acc.merge(key => parse_user_input(STDIN.gets.strip))
+      end
+    end
+
+    private
+
+    def platform
+      case RbConfig::CONFIG['host_os']
+      when /linux/
+        :linux
+      when /darwin/
+        :mac
+      when /(win|w)32/
+        :windows
+      else
+        :unknown
       end
     end
 

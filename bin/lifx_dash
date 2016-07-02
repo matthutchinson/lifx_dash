@@ -6,7 +6,7 @@ require "lifx_dash"
 include GLI::App
 
 LOGGER = Logger.new(STDOUT)
-config_options = LifxDash::Configuration.load
+CONFIG = LifxDash::Configuration.new
 
 program_desc "Toggle LIFX lights with an Amazon Dash button"
 
@@ -25,7 +25,11 @@ command :config do |c|
   c.switch [:s, :show]
 
   c.action do |_global_options, options, _args|
-    LifxDash::Configuration.new.run(show_config: options["show"])
+    if options["show"]
+      CONFIG.show
+    else
+      CONFIG.configure
+    end
   end
 end
 
@@ -38,7 +42,7 @@ packets of their own when you press. Take care to choose the MAC address from
 the ARP packet that occurs only once from a single MAC address."
 command :snoop do |c|
   c.desc "Network Interface"
-  c.default_value config_options["iface"] || "en0"
+  c.default_value CONFIG["iface"] || "en0"
   c.flag [:i, :iface]
 
   c.action do |_global_options, options, _args|
@@ -61,23 +65,23 @@ overrride this location."
 command :monitor do |c|
 
   c.desc "Dash button MAC address"
-  c.default_value config_options["mac-address"]
+  c.default_value CONFIG["mac-address"]
   c.flag [:m, :"mac-address"]
 
   c.desc "LIFX HTTP API Token"
-  c.default_value config_options["token"]
+  c.default_value CONFIG["token"]
   c.flag [:t, :token]
 
   c.desc "LIFX Bulb Selector"
-  c.default_value config_options["selector"] || "all"
+  c.default_value CONFIG["selector"] || "all"
   c.flag [:s, :selector]
 
   c.desc "Network Interface"
-  c.default_value config_options["iface"] || "en0"
+  c.default_value CONFIG["iface"] || "en0"
   c.flag [:i, :iface]
 
   c.desc "Log file location (when running as a daemon)"
-  c.default_value config_options["log-file"] || LifxDash::Daemonizer::LOG_FILE
+  c.default_value CONFIG["log-file"] || LifxDash::Daemonizer::LOG_FILE
   c.flag [:l, :"log-file"]
 
   c.desc "Dameonize the monitor process"
