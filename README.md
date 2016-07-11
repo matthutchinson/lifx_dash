@@ -186,11 +186,11 @@ CI](https://travis-ci.org/matthutchinson/lifx_dash). Read the [contributing
 guidelines](https://github.com/matthutchinson/lifx_dash/blob/master/CONTRIBUTING.md)
 for more details.
 
-This project is intended to be a safe, welcoming space for
-collaboration, and contributors are expected to adhere to the [Contributor
+This project is intended to be a safe, welcoming space for collaboration, and
+contributors are expected to adhere to the [Contributor
 Covenant](http://contributor-covenant.org) code of conduct. See
-[here](https://github.com/mroth/lolcommits/blob/master/CODE_OF_CONDUCT.md) for
-more details.
+[here](https://github.com/matthutchinson/lifx_dash/blob/master/CODE_OF_CONDUCT.md)
+for more details.
 
 ## Development
 
