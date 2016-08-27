@@ -26,17 +26,9 @@
           <li><a href="https://github.com/matthutchinson/lifx_dash/tarball/master">Download <strong>TAR Ball</strong></a></li>
           <li><a href="https://github.com/matthutchinson/lifx_dash">View On <strong>GitHub</strong></a></li>
         </ul>
-
-        <br/>
-        <a href="https://github.com/matthutchinson/lifx_dash"><img src="images/lifx_dash.png" alt="an Amazon Dash Button" /></a>
-
       </header>
       <section>
-        <h1>
-<a id="lifxdash" class="anchor" href="#lifxdash" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LifxDash</h1>
-
-
-<p><code>lifx_dash</code> is a simple command-line tool to monitor your network for <a href="https://www.amazon.com/Dash-Buttons/b?ie=UTF8&amp;node=10667898011">Amazon
+        <p><code>lifx_dash</code> is a simple command-line tool to monitor your network for <a href="https://www.amazon.com/Dash-Buttons/b?ie=UTF8&amp;node=10667898011">Amazon
 Dash button</a>
 presses and toggle <a href="http://www.lifx.com">LIFX</a> lights ON and OFF. The tool
 provides two commands, <code>monitor</code> and <code>snoop</code>.</p>
@@ -51,13 +43,22 @@ selector, or choose to daemonize the <code>monitor</code> process.</p>
 <p>A <code>config</code> command also exists, allowing you to set default options for
 <code>monitor</code> and <code>snoop</code>.</p>
 
-
 <h2>
 <a id="requirements" class="anchor" href="#requirements" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requirements</h2>
 
 <p><code>lifx_dash</code> requires at least one LIFX bulb, and any Amazon Dash button. You
 will also need a wifi network and root access to sniff packets on your network
 adaptor.</p>
+
+<p>This gem uses <a href="https://rubygems.org/gems/packetfu">packet_fu</a> which in turn
+requires the <a href="http://www.tcpdump.org">libpcap</a> library. This is probably already
+available on your machine, if not download the <a href="http://www.tcpdump.org/#latest-release">latest
+release</a> or install with your package
+manager e.g.:</p>
+
+<pre><code>sudo apt-get install libpcap0.8-dev  # UNIX
+brew install libpcap                 # homebrew on OSX
+</code></pre>
 
 <p><code>lifx_dash</code> is distributed via <a href="https://rubygems.org">RubyGems</a> and requires
 <a href="https://www.ruby-lang.org">Ruby</a> &gt;= 2.0.0.</p>
@@ -197,10 +198,108 @@ command line.</p>
 take a moment and check it hasn't already been raised (and possibly closed).</p>
 
 <h2>
+<a id="what-does-the-code-do" class="anchor" href="#what-does-the-code-do" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What does the code do?</h2>
+
+<p>This gem uses the <a href="https://rubygems.org/gems/packetfu">PacketFu</a> gem (and
+<a href="https://sourceforge.net/projects/libpcap/">libpcap</a> under the hood) to monitor
+data packets on your network. This packet stream is filtered by
+<a href="https://en.wikipedia.org/wiki/Address_Resolution_Protocol">ARP</a> packets (sent
+when a device attempts to identify itself). Amazon Dash buttons do this on every
+press.</p>
+
+<p>When an ARP packet is detected with a known source MAC address, the LIFX HTTP
+API <a href="https://api.developer.lifx.com/docs/toggle-power">toggle-power</a> endpoint is
+requested, with a selector and authorization header.</p>
+
+<p>The <a href="http://naildrivin5.com/gli/">GLI</a> command line framework is used to define
+the commands and options.
+<a href="https://rubygems.org/gems/minitest/versions/5.7.0">MiniTest</a> and
+<a href="https://rubygems.org/gems/aruba">Aruba</a> are used for testing.</p>
+
+<h2>
+<a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributing</h2>
+
+<p>Bug <a href="https://github.com/matthutchinson/lifx_dash/issues">reports</a> and <a href="https://github.com/matthutchinson/lifx_dash/pulls">pull
+requests</a> are welcome on
+GitHub.</p>
+
+<p>When submitting pull requests, please remember to add tests covering the new
+behaviour, and ensure all tests are passing on <a href="https://travis-ci.org/matthutchinson/lifx_dash">Travis
+CI</a>. Read the <a href="https://github.com/matthutchinson/lifx_dash/blob/master/CONTRIBUTING.md">contributing
+guidelines</a>
+for more details.</p>
+
+<p>This project is intended to be a safe, welcoming space for collaboration, and
+contributors are expected to adhere to the <a href="http://contributor-covenant.org">Contributor
+Covenant</a> code of conduct. See
+<a href="https://github.com/matthutchinson/lifx_dash/blob/master/CODE_OF_CONDUCT.md">here</a>
+for more details.</p>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development</h2>
+
+<p>After checking out the repo, run <code>bin/setup</code>, this will install dependencies,
+and re-generate the man page and docs. Then, run <code>bundle exec rake</code> to run all
+tests (and generate a coverage report). You can run unit or feature tests
+separately with:</p>
+
+<pre><code>bundle exec rake test
+bundle exec rake features
+</code></pre>
+
+<p>You can also run <code>bin/console</code> for an interactive prompt that will allow you to
+experiment with the gem code.</p>
+
+<h2>
+<a id="future-work" class="anchor" href="#future-work" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Future Work</h2>
+
+<p>Work in progress is usually mentioned at the top of the
+<a href="https://github.com/matthutchinson/lifx_dash/blob/master/CHANGELOG.md">CHANGELOG</a>.
+If you'd like to get involved in contributing, here are some ideas:</p>
+
+<ul>
+<li>Validation of all command line flag values, iface/mac/token etc.</li>
+<li>More unit test coverage</li>
+<li>Aruba features covering the happy paths for all commands</li>
+<li>Smarter config, auto-snoop, list bulbs with names and choose id</li>
+<li>Show existing values in config, when configuring, allowing edits (with readline)</li>
+<li>More Rdoc documentation on command classes</li>
+<li>New optional flag for the configuration file location</li>
+<li>Handle CTRL-C and kill signals with better exit/cleanup messages</li>
+<li>Use LIFX LAN API (with a command switch to choose LAN/HTTP)</li>
+</ul>
+
+<h2>
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
 
 <p>The gem is available as open source under the terms of the <a href="http://opensource.org/licenses/MIT">MIT
 License</a>.</p>
+
+<h2>
+<a id="links" class="anchor" href="#links" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Links</h2>
+
+<ul>
+<li><a href="http://travis-ci.org/matthutchinson/lifx_dash">Travis CI</a></li>
+<li><a href="https://coveralls.io/r/matthutchinson/lifx_dash?branch=master">Test Coverage</a></li>
+<li><a href="https://codeclimate.com/github/matthutchinson/lifx_dash">Code Climate</a></li>
+<li><a href="http://rdoc.info/projects/matthutchinson/lifx_dash">RDoc</a></li>
+<li><a href="http://wiki.github.com/matthutchinson/lifx_dash/">Wiki</a></li>
+<li><a href="http://github.com/matthutchinson/lifx_dash/issues">Issues</a></li>
+<li><a href="http://github.com/matthutchinson/lifx_dash/issues/new">Report a bug</a></li>
+<li><a href="http://rubygems.org/gems/lifx_dash">Gem</a></li>
+<li><a href="http://github.com/matthutchinson/lifx_dash">GitHub</a></li>
+</ul>
+
+<h2>
+<a id="whos-who" class="anchor" href="#whos-who" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Who's Who?</h2>
+
+<ul>
+<li>
+<a href="http://github.com/matthutchinson/lifx_dash">LifxDash</a> by <a href="http://matthewhutchinson.net">Matthew Hutchinson</a>
+</li>
+<li>Inspired by this <a href="http://tinyurl.com/zba3da2">hack</a> from <a href="https://twitter.com/edwardbenson">Ted Benson</a>
+</li>
+</ul>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/matthutchinson">matthutchinson</a></p>
@@ -208,6 +307,6 @@ License</a>.</p>
       </footer>
     </div>
     <script src="javascripts/scale.fix.js"></script>
-
+    
   </body>
 </html>
