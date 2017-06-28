@@ -35,11 +35,8 @@ end
 
 
 desc "Listen for Dash button presses on the network and show packet information"
-long_desc "Monitor the sepcified network interface for any Dash button ARP
-packets and log the device MAC address to stdout. Wait for the network to quiet
-down, before pressing the button, since other devices may respond with ARP
-packets of their own when you press. Take care to choose the MAC address from
-the ARP packet that occurs only once from a single MAC address."
+long_desc "Monitor the sepcified network interface for valid Dash button packets
+and log the device MAC address to stdout."
 command :snoop do |c|
   c.desc "Network Interface"
   c.default_value CONFIG["iface"] || "en0"
@@ -52,7 +49,7 @@ end
 
 desc "Listen for a Dash button press, and the toggle selected lights"
 long_desc "Monitor the sepcified network interface, filtered by a Dash button
-MAC address. If a valid ARP packet is detected, the LIFX lights (identified by
+MAC address. If a valid packet is detected, the LIFX lights (identified by
 the selector) will be toggled using the LIFX HTTP API (v1). You can optionally
 pass a LIFX bulb selector (the bulb ID), or choose to daemonize the `monitor`
 process.

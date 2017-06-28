@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "LIFX_DASH" "1" "June 2016" "" ""
+.TH "LIFX_DASH" "1" "June 2017" "" ""
 .
 .SH "NAME"
 \fBlifx_dash\fR \- Toggle LIFX lights with an Amazon Dash button
@@ -31,18 +31,18 @@ A \fBconfig\fR command also exists, allowing you to set default options for \fBm
 \fBlifx_dash\fR requires at least one LIFX bulb, and any Amazon Dash button\. You will also need a wifi network and root access to sniff packets on your network adaptor\.
 .
 .P
-Follow Amazon\'s Dash button setup steps, but \fBstop\fR before choosing any particular product to purchase\. You aill also need a free LIFX API token from here: \fIhttps://cloud\.lifx\.com/settings\fR
+Follow Amazon\'s Dash button setup steps, but \fBstop\fR before choosing a product to purchase\. Pressing the button should pulse white while connecting to wi\-fi, then flash orange\. If necessary, you can factory reset \fIhttps://www\.amazon\.com/gp/help/customer/display\.html?nodeId=201746400\fR your button and start the setup from scratch\.
+.
+.P
+You will also need a free LIFX API token from here: \fIhttps://cloud\.lifx\.com/settings\fR
 .
 .SH "OPTIONS"
-The snoop command has one optional flag, the network interface to listen on\.
+The snoop command has one optional flag \- the network interface to listen on\.
 .
 .IP "\(bu" 4
 \fB\-i\fR, \fB\-\-iface=arg\fR: Network Interface (default: en0)
 .
 .IP "" 0
-.
-.P
-Wait for the network to quiet down, before pressing the button, since other devices may respond with ARP packets of their own when you press\. Take care to choose the MAC address from the ARP packet that occurs only once from a single MAC address\.
 .
 .P
 The \fBmonitor\fR command accepts the following flags, both a mac address and api token are required\.
