@@ -106,23 +106,23 @@ selector, or choose to daemonize the <code>monitor</code> process.</p>
 will also need a wifi network and root access to sniff packets on your network
 adaptor.</p>
 
-<p>Follow Amazon's Dash button setup steps, but <strong>stop</strong> before choosing any
-particular product to purchase. You aill also need a free LIFX API token from
-here: <a href="https://cloud.lifx.com/settings" data-bare-link="true">https://cloud.lifx.com/settings</a></p>
+<p>Follow Amazon's Dash button setup steps, but <strong>stop</strong> before choosing a product
+to purchase. Pressing the button should pulse white while connecting to wi-fi,
+then flash orange. If necessary, you can <a href="https://www.amazon.com/gp/help/customer/display.html?nodeId=201746400">factory
+reset</a>
+your button and start the setup from scratch.</p>
+
+<p>You will also need a free LIFX API token from here:
+<a href="https://cloud.lifx.com/settings" data-bare-link="true">https://cloud.lifx.com/settings</a></p>
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
-<p>The snoop command has one optional flag, the network interface to listen on.</p>
+<p>The snoop command has one optional flag - the network interface to listen on.</p>
 
 <ul>
 <li><code>-i</code>, <code>--iface=arg</code>: Network Interface (default: en0)</li>
 </ul>
 
-
-<p>Wait for the network to quiet down, before pressing the button, since other
-devices may respond with ARP packets of their own when you press. Take care to
-choose the MAC address from the ARP packet that occurs only once from a single
-MAC address.</p>
 
 <p>The <code>monitor</code> command accepts the following flags, both a mac address and api
 token are required.</p>
@@ -208,7 +208,7 @@ by any arguments passed on the command line.</p>
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>June 2016</li>
+    <li class='tc'>June 2017</li>
     <li class='tr'>lifx_dash(1)</li>
   </ol>
 

@@ -49,8 +49,9 @@ The `lifx_dash` command will now be available in your PATH.
 
 ### Dash Button Setup
 
-Follow Amazon's Dash button setup steps, but **stop** before choosing any
-particular product to purchase. If necessary, you can [factory
+Follow Amazon's Dash button setup steps, but **stop** before choosing a product
+to purchase. Pressing the button should pulse white while connecting to wi-fi,
+then flash orange. If necessary, you can [factory
 reset](https://www.amazon.com/gp/help/customer/display.html?nodeId=201746400)
 your button and start the setup from scratch.
 
@@ -58,20 +59,11 @@ Next use the `snoop` command to determine the button's MAC address:
 
     $ sudo lifx_dash snoop -i en0
 
-This will listen on network interface 'en0' for ARP packets from any Dash
-button. Take a note of the MAC address that's logged when you press. To list
-network interfaces on your machine use:
+This will listen on network interface 'en0' for Dash button packets. Take a note
+of the MAC address that's logged when you press. To list network interfaces on
+your machine use:
 
-    $ ifconfig
-    # or
     $ ifconfig -l
-
-#### Snooping Tips
-
-Wait for the network to quiet down, before pressing the button, since other
-devices may respond with ARP packets of their own when you press. Take care to
-choose the MAC address from the ARP packet that occurs only once from a single
-MAC address.
 
 ### LIFX Bulb Setup
 
@@ -160,12 +152,12 @@ take a moment and check it hasn't already been raised (and possibly closed).
 
 This gem uses the [PacketFu](https://rubygems.org/gems/packetfu) gem (and
 [libpcap](https://sourceforge.net/projects/libpcap/) under the hood) to monitor
-data packets on your network. This packet stream is filtered by
-[ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol) packets (sent
-when a device attempts to identify itself). Amazon Dash buttons do this on every
-press.
+data packets on your network. This packet stream filters
+[ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol) packets and
+DHCP packets (sent from 0.0.0.0). Older buttons use the ARP method, while newer
+buttons issue DHCP packets.
 
-When an ARP packet is detected with a known source MAC address, the LIFX HTTP
+When a valid packet is detected with a known source MAC address, the LIFX HTTP
 API [toggle-power](https://api.developer.lifx.com/docs/toggle-power) endpoint is
 requested, with a selector and authorization header.
 
