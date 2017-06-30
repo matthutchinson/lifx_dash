@@ -49,8 +49,8 @@ Gem::Specification.new do |spec|
   spec.requirements << 'root access'
 
   # external gems
-  spec.add_runtime_dependency "gli", "2.14.0"
-  spec.add_runtime_dependency "packetfu", "1.1.11"
+  spec.add_runtime_dependency "gli", "2.16.0"
+  spec.add_runtime_dependency "packetfu", "1.1.13"
 
   # dev gems
   spec.add_development_dependency "bundler"
