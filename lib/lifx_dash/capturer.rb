@@ -24,7 +24,7 @@ module LifxDash
       capturer.stream.each do |packet|
         pkt = PacketFu::IPPacket.parse(packet)
         # only consider the first packet sent
-        if pkt.ip_id == 1
+        if pkt && pkt.ip_id == 1
           mac = PacketFu::EthHeader.str2mac(pkt.eth_src)
           block.call(pkt, mac) if block
         end
