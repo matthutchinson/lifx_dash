@@ -152,10 +152,10 @@ take a moment and check it hasn't already been raised (and possibly closed).
 
 This gem uses the [PacketFu](https://rubygems.org/gems/packetfu) gem (and
 [libpcap](https://sourceforge.net/projects/libpcap/) under the hood) to monitor
-data packets on your network. This packet stream filters
-[ARP](https://en.wikipedia.org/wiki/Address_Resolution_Protocol) packets and
-DHCP packets (sent from 0.0.0.0). Older buttons use the ARP method, while newer
-buttons issue DHCP packets.
+data packets on your network. This packet stream filters for
+[DHCP](https://wiki.wireshark.org/DHCP) packets (sent from 0.0.0.0). Older dash
+buttons sent both DHCP and [ARP](https://wiki.wireshark.org/ARP) packets but
+detecting ARP reliably was problematic.
 
 When a valid packet is detected with a known source MAC address, the LIFX HTTP
 API [toggle-power](https://api.developer.lifx.com/docs/toggle-power) endpoint is
