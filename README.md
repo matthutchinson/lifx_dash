@@ -153,9 +153,9 @@ take a moment and check it hasn't already been raised (and possibly closed).
 This gem uses the [PacketFu](https://rubygems.org/gems/packetfu) gem (and
 [libpcap](https://sourceforge.net/projects/libpcap/) under the hood) to monitor
 data packets on your network. This packet stream filters for
-[DHCP](https://wiki.wireshark.org/DHCP) packets (sent from 0.0.0.0). Older dash
-buttons sent both DHCP and [ARP](https://wiki.wireshark.org/ARP) packets but
-detecting ARP reliably was problematic.
+[DHCP](https://wiki.wireshark.org/DHCP) packets (sent from 0.0.0.0). See
+[below](https://github.com/matthutchinson/lifx_dash#packet-detection)
+for more details on packet detection.
 
 When a valid packet is detected with a known source MAC address, the LIFX HTTP
 API [toggle-power](https://api.developer.lifx.com/docs/toggle-power) endpoint is
@@ -165,6 +165,26 @@ The [GLI](http://naildrivin5.com/gli/) command line framework is used to define
 the commands and options.
 [MiniTest](https://rubygems.org/gems/minitest/versions/5.7.0) and
 [Aruba](https://rubygems.org/gems/aruba) are used for testing.
+
+## Packet detection
+
+Using [WireShark](https://www.wireshark.org) to monitor the network it appears
+that;
+
+* older buttons send an ARP packet followed by one or more DHCP packets
+* newer buttons send one or more DHCP packets
+
+To detect packets on both devices it should only be necessary to look for
+DHCP packets; this can be done with the following filter:
+
+```
+udp and src port 68 and dst port 67 and udp[247:4] == 0x63350103 and src host 0.0.0.0
+```
+
+However since DHCP packets appear to arrive in bursts of 2, the
+[Capturer](https://github.com/matthutchinson/lifx_dash/blob/master/lib/lifx_dash/capturer.rb)
+only acts on packets that have an even IP
+[ID](https://tools.ietf.org/html/rfc6864) field.
 
 ## Contributing
 
