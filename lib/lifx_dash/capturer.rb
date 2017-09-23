@@ -5,13 +5,10 @@ module LifxDash
 
     # Berkeley Packet filter for Amazon Dash buttons
     #
-    #  - older dash buttons issue an ARP packet from 0.0.0.0
-    #  - newer buttons broadcast a DHCP request from 0.0.0.0
-    #  - use the following bfp in WireShark to snoop for raw packets
-    #    - (arp or (udp.srcport == 68 and udp.dstport == 67)) and ip.src == 0.0.0.0
+    #  - most dash buttons broadcast a DHCP request from 0.0.0.0
     #  - for more details see https://github.com/ide/dash-button/issues/36
     #
-    PACKET_FILTER = "(arp or (udp and src port 68 and dst port 67)) and src host 0.0.0.0"
+    PACKET_FILTER = "udp and src port 68 and dst port 67 and udp[247:4] == 0x63350103 and src host 0.0.0.0"
 
     attr_reader :iface
 
@@ -22,11 +19,15 @@ module LifxDash
     def listen(&block)
       # examine packets on the stream
       capturer.stream.each do |packet|
-        pkt = PacketFu::IPPacket.parse(packet)
-        # only consider the first packet sent
-        if pkt && pkt.ip_id == 1
-          mac = PacketFu::EthHeader.str2mac(pkt.eth_src)
-          block.call(pkt, mac) if block
+        if PacketFu::IPPacket.can_parse?(packet)
+          pkt = PacketFu::IPPacket.parse(packet)
+          # only consider the first (early ip ids) even packet sent
+          # since dhcp often sends 2 packets in a quick burst
+          if pkt && pkt.ip_id < 5 && (pkt.ip_id % 2) == 0
+            puts pkt.inspect
+            mac = PacketFu::EthHeader.str2mac(pkt.eth_src)
+            block.call(pkt, mac) if block
+          end
         end
       end
     end
