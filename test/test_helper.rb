@@ -1,10 +1,5 @@
 if ENV['COVERAGE']
-  if ENV['TRAVIS']
-    require 'coveralls'
-    Coveralls.wear!
-  else
-    require 'simplecov'
-  end
+  require 'simplecov'
 end
 
 require 'lifx_dash'
