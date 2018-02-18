@@ -1,10 +1,10 @@
 # LifxDash
 
 [![Gem Version](https://img.shields.io/gem/v/lifx_dash.svg?style=flat)](http://rubygems.org/gems/lifx_dash)
-[![Travis Build Status](https://travis-ci.org/lolcommits/lifx_dash.svg?branch=master)](https://travis-ci.org/lolcommits/lifx_dash)
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/lolcommits/lifx_dash.svg)](https://codeclimate.com/github/lolcommits/lifx_dash/maintainability)
-[![Test Coverage](https://img.shields.io/codeclimate/c/lolcommits/lifx_dash.svg)](https://codeclimate.com/github/lolcommits/lifx_dash/test_coverage)
-[![Gem Dependency Status](https://gemnasium.com/badges/github.com/lolcommits/lifx_dash.svg)](https://gemnasium.com/github.com/lolcommits/lifx_dash)
+[![Travis Build Status](https://travis-ci.org/lifx_dash.svg?branch=master)](https://travis-ci.org/lifx_dash)
+[![Maintainability](https://img.shields.io/codeclimate/maintainability/lifx_dash.svg)](https://codeclimate.com/github/lifx_dash/maintainability)
+[![Test Coverage](https://img.shields.io/codeclimate/c/lifx_dash.svg)](https://codeclimate.com/github/lifx_dash/test_coverage)
+[![Gem Dependency Status](https://gemnasium.com/badges/github.com/lifx_dash.svg)](https://gemnasium.com/github.com/lifx_dash)
 
 ![Amazon LIFX Dash Button](http://matthutchinson.github.io/lifx_dash/images/lifx_dash.png)
 
@@ -241,8 +241,8 @@ License](http://opensource.org/licenses/MIT).
 ## Links
 
 * [Travis CI](http://travis-ci.org/matthutchinson/lifx_dash)
-* [Maintainability](https://codeclimate.com/github/lolcommits/lifx_dash/maintainability)
-* [Test Coverage](https://codeclimate.com/github/lolcommits/lifx_dash/test_coverage)
+* [Maintainability](https://codeclimate.com/github/lifx_dash/maintainability)
+* [Test Coverage](https://codeclimate.com/github/lifx_dash/test_coverage)
 * [RDoc](http://rdoc.info/projects/matthutchinson/lifx_dash)
 * [Wiki](http://wiki.github.com/matthutchinson/lifx_dash/)
 * [Issues](http://github.com/matthutchinson/lifx_dash/issues)
