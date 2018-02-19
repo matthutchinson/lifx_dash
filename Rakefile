@@ -4,8 +4,6 @@ require "cucumber"
 require "cucumber/rake/task"
 require 'rdoc/task'
 
-task :default => ['test:coverage']
-
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
   t.libs << "lib"
@@ -36,3 +34,4 @@ RDoc::Task.new do |rd|
   rd.rdoc_files.include("README.md", "LICENSE.txt", "lib/**/*.rb", "bin/**/*")
 end
 
+task :default => ['test:coverage']

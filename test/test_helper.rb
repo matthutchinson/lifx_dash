@@ -1,3 +1,5 @@
+require 'simplecov' if ENV['COVERAGE']
+
 require 'lifx_dash'
 require 'minitest/autorun'
 require 'webmock/minitest'
