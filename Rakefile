@@ -16,7 +16,7 @@ end
 namespace :test do
   desc "Run all tests and features and generate a code coverage report"
   task :coverage do
-    ENV['COVERAGE'] = 'true'
+    require 'simplecov'
     Rake::Task['test'].execute
     Rake::Task['features'].execute
   end

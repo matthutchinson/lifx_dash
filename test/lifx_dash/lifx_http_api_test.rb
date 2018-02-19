@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__)+'/../test_helper')
 
-class TestLifxHTTPApi <  MiniTest::Unit::TestCase
+class TestLifxHTTPApi <  Minitest::Test
 
   def setup
     @logger     = MiniTest::Mock.new
