@@ -12,11 +12,10 @@ end
 
 # test with code coverage (default)
 namespace :test do
-  desc "Run all tests and features and generate a code coverage report"
+  desc "Run all tests and features and generate a coverage report"
   task :coverage do
     ENV['COVERAGE'] = 'true'
-    Rake::Task['test'].execute
-    Rake::Task['features'].execute
+    Rake::Task[:test].execute
   end
 end
 
@@ -34,4 +33,4 @@ RDoc::Task.new do |rd|
   rd.rdoc_files.include("README.md", "LICENSE.txt", "lib/**/*.rb", "bin/**/*")
 end
 
-task :default => ['test:coverage']
+task :default => ['test:coverage', :features]
