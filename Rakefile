@@ -12,7 +12,7 @@ end
 
 # test with code coverage (default)
 namespace :test do
-  desc "Run all tests and features and generate a coverage report"
+  desc "Run all unit tests and generate a coverage report"
   task :coverage do
     ENV['COVERAGE'] = 'true'
     Rake::Task[:test].execute
