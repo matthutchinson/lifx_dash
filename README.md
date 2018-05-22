@@ -3,8 +3,8 @@
 [![Gem](https://img.shields.io/gem/v/lifx_dash.svg?style=flat)](http://rubygems.org/gems/lifx_dash)
 [![Travis](https://travis-ci.org/matthutchinson/lifx_dash.svg?branch=master)](https://travis-ci.org/matthutchinson/lifx_dash)
 [![Depfu](https://img.shields.io/depfu/matthutchinson/lifx_dash.svg?style=flat)](https://depfu.com/github/matthutchinson/lifx_dash)
-[![Maintainability](https://img.shields.io/codeclimate/maintainability/matthutchinson/lifx_dash.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash/maintainability)
-[![Test Coverage](https://img.shields.io/codeclimate/c/matthutchinson/lifx_dash.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/2fc8264df43f49c3fc41/maintainability)](https://codeclimate.com/github/matthutchinson/lifx_dash/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/2fc8264df43f49c3fc41/test_coverage)](https://codeclimate.com/github/matthutchinson/lifx_dash/test_coverage)
 
 ![Amazon LIFX Dash Button](http://matthutchinson.github.io/lifx_dash/images/lifx_dash.png)
 
