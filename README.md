@@ -1,10 +1,10 @@
 # LifxDash
 
-[![Gem Version](https://img.shields.io/gem/v/lifx_dash.svg?style=flat)](http://rubygems.org/gems/lifx_dash)
-[![Travis Build Status](https://travis-ci.org/matthutchinson/lifx_dash.svg?branch=master)](https://travis-ci.org/matthutchinson/lifx_dash)
+[![Gem](https://img.shields.io/gem/v/lifx_dash.svg?style=flat)](http://rubygems.org/gems/lifx_dash)
+[![Travis](https://travis-ci.org/matthutchinson/lifx_dash.svg?branch=master)](https://travis-ci.org/matthutchinson/lifx_dash)
+[![Depfu](https://img.shields.io/depfu/matthutchinson/lifx_dash.svg?style=flat)](https://depfu.com/github/matthutchinson/lifx_dash)
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/matthutchinson/lifx_dash.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash/maintainability)
 [![Test Coverage](https://img.shields.io/codeclimate/c/matthutchinson/lifx_dash.svg)](https://codeclimate.com/github/matthutchinson/lifx_dash/test_coverage)
-[![Gem Dependency Status](https://gemnasium.com/badges/github.com/matthutchinson/lifx_dash.svg)](https://gemnasium.com/github.com/matthutchinson/lifx_dash)
 
 ![Amazon LIFX Dash Button](http://matthutchinson.github.io/lifx_dash/images/lifx_dash.png)
 
