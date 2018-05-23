@@ -21,6 +21,13 @@ Gem::Specification.new do |spec|
   network packet sniffing.
   EOF
 
+  spec.metadata = {
+    "homepage_uri"    => "https://github.com/matthutchinson/lifx_dash",
+    "changelog_uri"   => "https://github.com/matthutchinson/lifx_dash/blob/master/CHANGELOG.md",
+    "source_code_uri" => "https://github.com/matthutchinson/lifx_dash",
+    "bug_tracker_uri" => "https://github.com/matthutchinson/lifx_dash/issues",
+  }
+
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the
   # 'allowed_push_host' to allow pushing to a single host or delete this section
   # to allow pushing to any host.
