@@ -12,7 +12,6 @@ adheres to [Semantic Versioning](Semver).
 ## [0.3.1] - 2018-05-23
 ### Changed
 - Adding links to gemspec
-- Validation of all command line flag values, iface/mac/token etc.
 
 ## [0.1.3] - 2016-07-02
 ### Changed
