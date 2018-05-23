@@ -1,22 +1,22 @@
 sudo: required
 language: ruby
-before_install:
-  - sudo apt-get install libpcap-dev -qq
-  - gem update --system
-  - gem --version
 rvm:
   - 2.1.10
   - 2.2.9
   - 2.3.6
   - 2.4.3
-  - 2.5.0
+  - 2.5.1
   - ruby-head
+
+before_install:
+  - sudo apt-get install libpcap-dev -qq
+  - gem update --system
+  - gem install bundler
+
 matrix:
   allow_failures:
   - rvm: ruby-head
-branches:
-  except:
-  - gh-pages
+
 deploy:
   provider: rubygems
   api_key:
@@ -25,6 +25,7 @@ deploy:
   on:
     tags: true
     repo: matthutchinson/lifx_dash
+
 env:
   global:
     - CC_TEST_REPORTER_ID=71107cb58f585bf7506e53f33238f4bd4e9aa87215ed916a5b466ecd9b493209
