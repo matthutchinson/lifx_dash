@@ -44,7 +44,6 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   # documentation
-  spec.has_rdoc         = true
   spec.extra_rdoc_files = ['README.md', 'LICENSE.txt']
   spec.rdoc_options << '--title' << 'lifx_dash' << '--main' << 'README.md' << '-ri'
 

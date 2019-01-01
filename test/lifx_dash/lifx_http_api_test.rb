@@ -56,9 +56,11 @@ class TestLifxHTTPApi <  Minitest::Test
   end
 
   def test_raises_error_on_toggle_with_bad_selector
-    assert_raises(URI::InvalidURIError) do
+    assert_raises do
       bad_selector = "im a bad bulb selector"
-      @logger.expect(:error, nil, ["Error: POST request to #{LifxDash::LifxHTTPApi::BASE_URI} failed: bad URI(is not URI?): #{lifx_url(bad_selector)}"])
+      @logger.expect(:error, nil, [
+        "Error: POST request to #{LifxDash::LifxHTTPApi::BASE_URI} failed: bad URI(is not URI?): #{lifx_url(bad_selector)}"
+      ])
       @api_client.toggle(bad_selector)
 
       assert @logger.verify
