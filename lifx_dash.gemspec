@@ -22,20 +22,12 @@ Gem::Specification.new do |spec|
   EOF
 
   spec.metadata = {
-    "homepage_uri"    => "https://github.com/matthutchinson/lifx_dash",
-    "changelog_uri"   => "https://github.com/matthutchinson/lifx_dash/blob/master/CHANGELOG.md",
-    "source_code_uri" => "https://github.com/matthutchinson/lifx_dash",
-    "bug_tracker_uri" => "https://github.com/matthutchinson/lifx_dash/issues",
+    "homepage_uri"      => "https://github.com/matthutchinson/lifx_dash",
+    "changelog_uri"     => "https://github.com/matthutchinson/lifx_dash/blob/master/CHANGELOG.md",
+    "source_code_uri"   => "https://github.com/matthutchinson/lifx_dash",
+    "bug_tracker_uri"   => "https://github.com/matthutchinson/lifx_dash/issues",
+    "allowed_push_host" => "https://rubygems.org"
   }
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the
-  # 'allowed_push_host' to allow pushing to a single host or delete this section
-  # to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "https://rubygems.org"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|features)/}) }
   spec.test_files    = `git ls-files -- {test,features}/*`.split("\n")
@@ -48,7 +40,7 @@ Gem::Specification.new do |spec|
   spec.rdoc_options << '--title' << 'lifx_dash' << '--main' << 'README.md' << '-ri'
 
   # non-gem dependecies
-  spec.required_ruby_version = ">= 2.1"
+  spec.required_ruby_version = ">= 2.3"
   spec.requirements << 'libpcap'
   spec.requirements << 'an Amazon Dash button'
   spec.requirements << 'one or more LIFX bulbs'

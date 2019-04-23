@@ -2,12 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](KeepAChangelog) and this project
-adheres to [Semantic Versioning](Semver).
+The format is based on [Keep a Changelog][KeepAChangelog] and this project
+adheres to [Semantic Versioning][Semver].
 
 ## [Unreleased]
 
 - Your contribution here!
+
+## [0.4.0] - 2019-04-23
+### Added
+- `frozen_string_literal: true` to all Ruby files
+
+### Removed
+- Support for Ruby < 2.3 (earlier versions no longer supported)
 
 ## [0.3.1] - 2018-05-23
 ### Changed
@@ -28,7 +35,8 @@ adheres to [Semantic Versioning](Semver).
 - Dameonizing option for monitor command (writing to a log file)
 - Built with gli command-suite gem
 
-[Unreleased]: https://github.com/matthutchinson/lifx_dash/compare/v0.3.1...HEAD
+[Unreleased]: https://github.com/matthutchinson/lifx_dash/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/matthutchinson/lifx_dash/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/matthutchinson/lifx_dash/compare/v0.1.3...v0.3.1
 [0.1.3]: https://github.com/matthutchinson/lifx_dash/compare/v0.1.1...v0.1.3
 [0.1.1]: https://github.com/matthutchinson/lifx_dash/compare/v0.1.0...v0.1.1
