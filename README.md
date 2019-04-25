@@ -1,7 +1,7 @@
 # LifxDash
 
 [![Gem](https://img.shields.io/gem/v/lifx_dash.svg?style=flat)](http://rubygems.org/gems/lifx_dash)
-[![Travis](https://travis-ci.org/matthutchinson/lifx_dash.svg?branch=master)](https://travis-ci.org/matthutchinson/lifx_dash)
+[![Travis](https://img.shields.io/travis/com/matthutchinson/lifx_dash/master.svg?style=flat)](https://travis-ci.com/matthutchinson/lifx_dash)
 [![Depfu](https://img.shields.io/depfu/matthutchinson/lifx_dash.svg?style=flat)](https://depfu.com/github/matthutchinson/lifx_dash)
 [![Maintainability](https://api.codeclimate.com/v1/badges/2fc8264df43f49c3fc41/maintainability)](https://codeclimate.com/github/matthutchinson/lifx_dash/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/2fc8264df43f49c3fc41/test_coverage)](https://codeclimate.com/github/matthutchinson/lifx_dash/test_coverage)
@@ -194,7 +194,7 @@ GitHub.
 
 When submitting pull requests, please remember to add tests covering the new
 behaviour, and ensure all tests are passing on [Travis
-CI](https://travis-ci.org/matthutchinson/lifx_dash). Read the [contributing
+CI](https://travis-ci.com/matthutchinson/lifx_dash). Read the [contributing
 guidelines](https://github.com/matthutchinson/lifx_dash/blob/master/CONTRIBUTING.md)
 for more details.
 
@@ -240,7 +240,7 @@ License](http://opensource.org/licenses/MIT).
 
 ## Links
 
-* [Travis CI](http://travis-ci.org/matthutchinson/lifx_dash)
+* [Travis CI](http://travis-ci.com/matthutchinson/lifx_dash)
 * [Maintainability](https://codeclimate.com/github/matthutchinson/lifx_dash/maintainability)
 * [Test Coverage](https://codeclimate.com/github/matthutchinson/lifx_dash/test_coverage)
 * [RDoc](http://rdoc.info/projects/matthutchinson/lifx_dash)
